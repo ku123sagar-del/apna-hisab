@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#116b5d">
+<title>Apna Hisab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#116b5d;--green2:#e8f5f1;--ink:#18332f;--muted:#71817d;--line:#e5ece9;--bg:#f5f8f7;--red:#bd5148;--gold:#a56c17}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Devanagari",sans-serif}button,input,select{font:inherit}button{cursor:pointer;border:0}.wrap{max-width:980px;margin:auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;margin:8px 0 20px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:22px}.logo{width:42px;height:42px;border-radius:14px;background:var(--green);color:white;display:grid;place-items:center;font-size:24px}.muted{color:var(--muted);font-size:13px}.hidden{display:none!important}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 4px 18px #173b3010}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:8px}.green{color:var(--green)}.red{color:var(--red)}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.nav button,.chip{padding:10px 14px;border-radius:12px;background:white;border:1px solid var(--line);color:var(--ink)}.nav button.active,.primary{background:var(--green);color:white;border-color:var(--green)}.section{margin:16px 0}.section h2{font-size:18px;margin:0 0 13px}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}.btn{padding:12px 16px;border-radius:11px;background:var(--green);color:white;font-weight:700}.btn.secondary{background:#eef4f2;color:var(--ink)}.btn.danger{background:#fff0ee;color:var(--red)}.items{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.item{background:#f3f8f6;border:1px solid #e1eee9;border-radius:11px;padding:10px 8px;text-align:left;color:var(--ink);font-size:13px}.item:active{background:#dff0e9}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.list{display:flex;flex-direction:column;gap:8px}.entry{display:flex;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--line);border-radius:12px}.entry small{display:block;color:var(--muted);margin-top:4px}.badge{font-size:11px;border-radius:20px;padding:4px 8px;background:var(--green2);color:var(--green)}.badge.pending{background:#fff4df;color:var(--gold)}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tabs button{padding:12px;border-radius:11px;background:#eef3f1;color:var(--ink)}.tabs button.active{background:var(--green);color:white}.bar{height:9px;border-radius:10px;background:#edf2f0;overflow:hidden}.bar span{display:block;height:100%;background:var(--green)}.auth{max-width:420px;margin:8vh auto}.notice{padding:12px;border-radius:12px;background:#fff7e8;color:#77551c;font-size:13px;line-height:1.5}.foot{font-size:12px;color:var(--muted);text-align:center;margin:25px 0}.smallbtn{padding:7px 9px;border-radius:9px;background:#f1f5f3;color:var(--ink);font-size:12px}@media(max-width:700px){.wrap{padding:13px}.grid{grid-template-columns:repeat(2,1fr)}.items{grid-template-columns:repeat(3,1fr)}.stat strong{font-size:22px}.formgrid{grid-template-columns:1fr}.top{margin-top:3px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="authView" class="auth card">
+    <div class="brand"><div class="logo">₹</div><div>Apna Hisab<div class="muted">घर के खर्च और आमदनी का आसान हिसाब</div></div></div>
+    <div class="section"><h2 id="authTitle">लॉगिन करें</h2>
+      <div class="field section"><label>ईमेल</label><input id="email" type="email" placeholder="आपका ईमेल"></div>
+      <div class="field section"><label>पासवर्ड</label><input id="password" type="password" placeholder="कम से कम 6 अक्षर"></div>
+      <button id="loginBtn" class="btn" style="width:100%">लॉगिन</button>
+      <button id="signupBtn" class="btn secondary" style="width:100%;margin-top:8px">नया अकाउंट बनाएँ</button>
+      <p id="authMsg" class="muted"></p>
+    </div>
+    <div class="notice">आपका डेटा आपके लॉगिन अकाउंट के अंतर्गत निजी रखा जाएगा। दोनों फोन पर एक ही अकाउंट से लॉगिन करने पर एक ही हिसाब दिखेगा।</div>
+  </div>
+
+  <main id="appView" class="hidden">
+    <header class="top"><div class="brand"><div class="logo">₹</div><div>Apna Hisab<div class="muted">आपके पैसों का पूरा हिसाब</div></div></div><button id="logoutBtn" class="smallbtn">लॉगआउट</button></header>
+    <div class="grid">
+      <div class="card stat"><small>इस महीने मिले</small><strong class="green" id="monthIncome">₹0</strong></div>
+      <div class="card stat"><small>इस महीने खर्च</small><strong class="red" id="monthExpense">₹0</strong></div>
+      <div class="card stat"><small>इस महीने का अंतर</small><strong id="monthNet">₹0</strong></div>
+      <div class="card stat"><small>आज का खर्च</small><strong id="todayExpense">₹0</strong></div>
+    </div>
+    <div class="card section">
+      <div class="row"><div><div class="muted">कुल दर्ज आमदनी − कुल दर्ज खर्च</div><h2 style="margin:5px 0">बैलेंस: <span id="balance">₹0</span></h2></div><span class="badge">Cloud Sync</span></div>
+      <div class="muted">बैलेंस आपके दर्ज किए गए लेन-देन का हिसाब है; बैंक/कैश बैलेंस से मिलान खुद करें।</div>
+    </div>
+    <nav class="nav">
+      <button class="active" data-tab="add">+ एंट्री</button><button data-tab="history">रिकॉर्ड</button><button data-tab="rent">मेरा रेंट</button><button data-tab="report">रिपोर्ट</button>
+    </nav>
+
+    <section id="tab-add">
+      <div class="card section">
+        <div class="tabs"><button class="active" id="expenseMode">खर्च दर्ज करें</button><button id="incomeMode">पैसे मिले</button></div>
+        <div class="section">
+          <div class="field"><label>किसका लेन-देन?</label><select id="person"><option>मैं</option><option>बहन</option><option>साझा</option></select></div>
+          <div class="field section"><label id="itemLabel">सामान / खर्च का नाम</label><input id="itemName" list="itemOptions" placeholder="जैसे दूध, तेल, SSC फॉर्म"><datalist id="itemOptions"></datalist></div>
+          <div class="items" id="quickItems"></div>
+          <div class="formgrid section">
+            <div class="field"><label>रकम (₹)</label><input id="amount" type="number" min="1" step="0.01" placeholder="0"></div>
+            <div class="field"><label>तारीख</label><input id="date" type="date"></div>
+            <div class="field"><label>कैटेगरी</label><select id="category"><option>किराना और किचन</option><option>दूध और नाश्ता</option><option>सब्जियाँ</option><option>बाथरूम और सफाई</option><option>पढ़ाई / फॉर्म</option><option>कपड़े / शॉपिंग</option><option>यात्रा</option><option>बाहर खाना</option><option>स्वास्थ्य</option><option>मोबाइल / इंटरनेट</option><option>रेंट</option><option>अन्य</option></select></div>
+            <div class="field"><label>भुगतान का तरीका</label><select id="payment"><option>UPI</option><option>Cash</option><option>Bank</option><option>Card</option></select></div>
+          </div>
+          <div class="field section"><label>नोट (वैकल्पिक)</label><input id="note" placeholder="कोई अतिरिक्त जानकारी"></div>
+          <button id="saveEntry" class="btn" style="width:100%">सेव करें</button>
+          <p id="saveMsg" class="muted"></p>
+        </div>
+      </div>
+      <div class="card section"><div class="row"><h2>अपना सामान जोड़ें</h2><span class="badge">Custom</span></div><div class="formgrid"><div class="field"><label>नए सामान का नाम</label><input id="customName" placeholder="जैसे बाल्टी"></div><div class="field"><label>कैटेगरी</label><select id="customCategory"><option>किराना और किचन</option><option>दूध और नाश्ता</option><option>सब्जियाँ</option><option>बाथरूम और सफाई</option><option>पढ़ाई / फॉर्म</option><option>अन्य</option></select></div></div><button id="addCustom" class="btn secondary" style="margin-top:10px">+ सामान लिस्ट में जोड़ें</button></div>
+    </section>
+
+    <section id="tab-history" class="hidden">
+      <div class="card section"><div class="row"><h2>लेन-देन का रिकॉर्ड</h2><input id="filterMonth" type="month" style="max-width:150px;padding:8px;border:1px solid var(--line);border-radius:9px"></div><div id="historyList" class="list"></div><button id="exportBtn" class="btn secondary" style="margin-top:12px;width:100%">रिकॉर्ड CSV डाउनलोड करें</button></div>
+    </section>
+
+    <section id="tab-rent" class="hidden">
+      <div class="card section"><div class="row"><div><div class="muted">हर महीने की 1 तारीख</div><h2 style="margin:5px 0">मासिक किराया</h2></div><span class="badge">Recurring</span></div>
+      <div style="font-size:34px;font-weight:800;color:var(--green)">₹2,100</div><p class="muted">सालाना किराया: ₹25,200</p><div class="notice" id="rentStatus">किराया स्थिति देखी जा रही है…</div><button id="rentPaid" class="btn" style="width:100%;margin-top:12px">इस महीने का किराया Paid दर्ज करें</button><p class="muted">किराया तभी खर्च में जुड़ेगा जब आप Paid दर्ज करेंगे। हर महीने 1 तारीख को वेबसाइट खोलने पर रिमाइंडर दिखेगा।</p></div>
+    </section>
+
+    <section id="tab-report" class="hidden">
+      <div class="card section"><h2>इस महीने की रिपोर्ट</h2><div id="reportRows" class="list"></div></div>
+      <div class="card section"><h2>बैकअप</h2><p class="muted">अपने रिकॉर्ड की एक कॉपी अपने फोन में रखें।</p><button id="backupBtn" class="btn secondary" style="width:100%">पूरा बैकअप JSON डाउनलोड करें</button></div>
+    </section>
+    <div class="foot">Apna Hisab · निजी खर्च प्रबंधन</div>
+  </main>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBFM376K2t_4u2nsET-qKtuKT6ZkrDmbAU",
+  authDomain: "kisan-market-40083.firebaseapp.com",
+  projectId: "kisan-market-40083",
+  storageBucket: "kisan-market-40083.firebasestorage.app",
+  messagingSenderId: "877198238570",
+  appId: "1:877198238570:web:b8810a7a40e3ff2a7f7b13"
+};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(), db=firebase.firestore();
+let currentUser=null, entries=[], mode="expense", customItems=[];
+const defaults=[
+["खाने का तेल","किराना और किचन"],["सरसों तेल","किराना और किचन"],["नमक","किराना और किचन"],["चीनी","किराना और किचन"],["हल्दी","किराना और किचन"],["मिर्च पाउडर","किराना और किचन"],["धनिया पाउडर","किराना और किचन"],["जीरा","किराना और किचन"],["गरम मसाला","किराना और किचन"],["राय","किराना और किचन"],["हींग","किराना और किचन"],["चावल","किराना और किचन"],["आटा","किराना और किचन"],["दाल","किराना और किचन"],["सूजी","किराना और किचन"],["बेसन","किराना और किचन"],["चायपत्ती","किराना और किचन"],["बिस्कुट","किराना और किचन"],["दूध","दूध और नाश्ता"],["दही","दूध और नाश्ता"],["पनीर","दूध और नाश्ता"],["ब्रेड","दूध और नाश्ता"],["अंडे","दूध और नाश्ता"],["मक्खन","दूध और नाश्ता"],["केला","दूध और नाश्ता"],["आलू","सब्जियाँ"],["प्याज","सब्जियाँ"],["टमाटर","सब्जियाँ"],["हरी मिर्च","सब्जियाँ"],["लहसुन","सब्जियाँ"],["अदरक","सब्जियाँ"],["गोभी","सब्जियाँ"],["भिंडी","सब्जियाँ"],["बैंगन","सब्जियाँ"],["पालक","सब्जियाँ"],["नहाने का साबुन","बाथरूम और सफाई"],["कपड़े धोने का साबुन","बाथरूम और सफाई"],["डिटर्जेंट पाउडर","बाथरूम और सफाई"],["Colgate / टूथपेस्ट","बाथरूम और सफाई"],["टूथब्रश","बाथरूम और सफाई"],["शैम्पू","बाथरूम और सफाई"],["हैंडवॉश","बाथरूम और सफाई"],["फिनाइल","बाथरूम और सफाई"],["डिशवॉश बार","बाथरूम और सफाई"],["माचिस","अन्य"],["मोमबत्ती","अन्य"],["गैस सिलेंडर","अन्य"],["किताब","पढ़ाई / फॉर्म"],["कॉपी","पढ़ाई / फॉर्म"],["पेन","पढ़ाई / फॉर्म"],["SSC फॉर्म","पढ़ाई / फॉर्म"],["Railway फॉर्म","पढ़ाई / फॉर्म"],["JSSC फॉर्म","पढ़ाई / फॉर्म"],["शर्ट","कपड़े / शॉपिंग"],["जूते","कपड़े / शॉपिंग"],["बस किराया","यात्रा"],["ट्रेन टिकट","यात्रा"],["चाय","बाहर खाना"],["नाश्ता","बाहर खाना"],["दवाई","स्वास्थ्य"],["मोबाइल रिचार्ज","मोबाइल / इंटरनेट"]
+];
+const $=id=>document.getElementById(id), money=n=>"₹"+Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:2});
+function today(){return new Date().toISOString().slice(0,10)}
+$("date").value=today(); $("filterMonth").value=today().slice(0,7);
+function msg(t){$("authMsg").textContent=t}
+$("loginBtn").onclick=()=>auth.signInWithEmailAndPassword($("email").value.trim(),$("password").value).catch(e=>msg(friendly(e)));
+$("signupBtn").onclick=()=>auth.createUserWithEmailAndPassword($("email").value.trim(),$("password").value).catch(e=>msg(friendly(e)));
+function friendly(e){return ({ "auth/invalid-email":"ईमेल सही लिखें।","auth/weak-password":"पासवर्ड कम से कम 6 अक्षर का रखें।","auth/user-not-found":"अकाउंट नहीं मिला। पहले नया अकाउंट बनाएँ।","auth/wrong-password":"पासवर्ड गलत है।","auth/email-already-in-use":"यह ईमेल पहले से रजिस्टर है। लॉगिन करें।"})[e.code]||e.message}
+auth.onAuthStateChanged(async user=>{currentUser=user;$("authView").classList.toggle("hidden",!!user);$("appView").classList.toggle("hidden",!user);if(user){await loadEntries();}});
+$("logoutBtn").onclick=()=>auth.signOut();
+async function loadEntries(){try{const s=await db.collection("users").doc(currentUser.uid).collection("entries").orderBy("date","desc").get();entries=s.docs.map(d=>({id:d.id,...d.data()}));render();}catch(e){alert("डेटा लोड नहीं हुआ: "+e.message+"\\nFirestore Rules लागू करना जरूरी है।")}}
+function render(){const m=today().slice(0,7), month=entries.filter(x=>(x.date||"").startsWith(m)), inc=month.filter(x=>x.type==="income").reduce((a,x)=>a+Number(x.amount),0),exp=month.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount),0),allI=entries.filter(x=>x.type==="income").reduce((a,x)=>a+Number(x.amount),0),allE=entries.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount),0);
+$("monthIncome").textContent=money(inc);$("monthExpense").textContent=money(exp);$("monthNet").textContent=money(inc-exp);$("balance").textContent=money(allI-allE);$("todayExpense").textContent=money(entries.filter(x=>x.type==="expense"&&x.date===today()).reduce((a,x)=>a+Number(x.amount),0));
+const list=entries.filter(x=>!$("filterMonth").value||(x.date||"").startsWith($("filterMonth").value));$("historyList").innerHTML=list.length?list.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${esc(x.date)} · ${esc(x.person)} · ${esc(x.category||"")}</small></div><div style="text-align:right"><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</b><br><button class="smallbtn" onclick="deleteEntry('${x.id}')">हटाएँ</button></div></div>`).join(""):'<p class="muted">अभी कोई रिकॉर्ड नहीं है।</p>';
+const cats={};month.filter(x=>x.type==="expense").forEach(x=>cats[x.category||"अन्य"]=(cats[x.category||"अन्य"]||0)+Number(x.amount));$("reportRows").innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div><div class="row"><span>${esc(k)}</span><b>${money(v)}</b></div><div class="bar"><span style="width:${exp?Math.min(100,v/exp*100):0}%"></span></div></div>`).join("")||'<p class="muted">इस महीने खर्च दर्ज नहीं है।</p>';
+rentRender();}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+window.deleteEntry=async id=>{if(!confirm("यह रिकॉर्ड हटाएँ?"))return;await db.collection("users").doc(currentUser.uid).collection("entries").doc(id).delete();await loadEntries()};
+function setMode(m){mode=m;$("expenseMode").classList.toggle("active",m==="expense");$("incomeMode").classList.toggle("active",m==="income");$("itemLabel").textContent=m==="income"?"पैसे कहाँ से मिले?":"सामान / खर्च का नाम";$("quickItems").classList.toggle("hidden",m==="income");}
+$("expenseMode").onclick=()=>setMode("expense");$("incomeMode").onclick=()=>setMode("income");
+function showItems(){let all=[...defaults,...customItems];$("quickItems").innerHTML=all.slice(0,60).map(([n,c])=>`<button class="item" data-name="${esc(n)}" data-cat="${esc(c)}">${esc(n)}</button>`).join("");$("itemOptions").innerHTML=all.map(([n])=>`<option value="${esc(n)}">`).join("");document.querySelectorAll(".item").forEach(b=>b.onclick=()=>{$("itemName").value=b.dataset.name;$("category").value=b.dataset.cat;});}
+showItems();
+$("saveEntry").onclick=async()=>{const amount=Number($("amount").value),name=$("itemName").value.trim();if(!name||!amount||amount<=0){$("saveMsg").textContent="नाम और सही रकम भरें।";return}const data={type:mode,name,amount,date:$("date").value||today(),person:$("person").value,category:mode==="income"?"आमदनी":$("category").value,payment:$("payment").value,note:$("note").value.trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()};try{await db.collection("users").doc(currentUser.uid).collection("entries").add(data);$("amount").value="";$("itemName").value="";$("note").value="";$("saveMsg").textContent="सेव हो गया ✓";await loadEntries();}catch(e){$("saveMsg").textContent="सेव नहीं हुआ: "+e.message}};
+$("addCustom").onclick=()=>{let n=$("customName").value.trim();if(!n)return;customItems.push([n,$("customCategory").value]);$("customName").value="";showItems();$("saveMsg").textContent="सामान इस ब्राउज़र की लिस्ट में जुड़ गया।"};
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x===b));["add","history","rent","report"].forEach(t=>$("tab-"+t).classList.toggle("hidden",t!==b.dataset.tab));if(b.dataset.tab==="rent")rentRender()});
+$("filterMonth").onchange=render;
+async function rentRender(){if(!currentUser)return;let m=today().slice(0,7),paid=entries.some(x=>x.type==="expense"&&x.category==="रेंट"&&x.date?.startsWith(m)&&x.name==="मकान किराया");$("rentStatus").innerHTML=paid?'<span class="badge">इस महीने Paid ✓</span>':'<span class="badge pending">इस महीने का ₹2,100 किराया Pending</span>'; $("rentPaid").disabled=paid;$("rentPaid").textContent=paid?"इस महीने का किराया दर्ज हो चुका है":"₹2,100 किराया Paid दर्ज करें";}
+$("rentPaid").onclick=async()=>{const m=today().slice(0,7);if(entries.some(x=>x.category==="रेंट"&&x.date?.startsWith(m)&&x.name==="मकान किराया"))return;await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"expense",name:"मकान किराया",amount:2100,date:today(),person:"मैं",category:"रेंट",payment:"UPI",note:"मासिक किराया",createdAt:firebase.firestore.FieldValue.serverTimestamp()});await loadEntries();};
+function download(name,content,type){const a=document.createElement("a"),u=URL.createObjectURL(new Blob([content],{type}));a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
+$("exportBtn").onclick=()=>{let rows=[["तारीख","प्रकार","नाम","रकम","किसका","कैटेगरी","भुगतान"],...entries.map(x=>[x.date,x.type,x.name,x.amount,x.person,x.category,x.payment])];download("apna-hisab.csv","\\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\\n"),"text/csv;charset=utf-8")};
+$("backupBtn").onclick=()=>download("apna-hisab-backup.json",JSON.stringify(entries,null,2),"application/json");
+</script>
+</body></html>
