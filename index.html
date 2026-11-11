@@ -83,8 +83,9 @@
     </section>
     <section id="tab-history" class="hidden">
       <div class="card section">
-        <div class="row"><h2>महीने का दिनवार हिसाब</h2><input id="filterMonth" type="month" style="max-width:150px;padding:8px;border:1px solid var(--line);border-radius:9px"></div>
-        <p class="muted">किसी भी तारीख पर टैप करें—उस दिन की पूरी कमाई, खर्च और सभी एंट्री दिखेंगी। खाली तारीखें भी चुन सकते हैं।</p>
+        <div class="row"><h2>तारीख के अनुसार पूरा हिसाब</h2></div>
+        <p class="muted">पहले साल, महीना और तारीख चुनें। फिर नीचे तारीख पर टैप करके उस दिन की पूरी कमाई और खर्च देखें।</p>
+        <div class="field"><label>तारीख चुनें (Date · Month · Year)</label><input id="filterDate" type="date" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:16px"></div>
         <div id="dailySummary" class="list"></div>
       </div>
       <div id="dailyDetail" class="card section hidden"></div>
@@ -127,7 +128,7 @@ const defaults=[
 ];
 const $=id=>document.getElementById(id), money=n=>"₹"+Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:2});
 function today(){const d=new Date(),y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");return `${y}-${m}-${day}`}
-$("date").value=today(); $("filterMonth").value=today().slice(0,7);
+$("date").value=today(); $("filterDate").value=today();
 function msg(t){$("authMsg").textContent=t}
 $("loginBtn").onclick=()=>auth.signInWithEmailAndPassword($("email").value.trim(),$("password").value).catch(e=>msg(friendly(e)));
 function friendly(e){return ({"auth/invalid-email":"ईमेल सही लिखें।","auth/user-not-found":"अकाउंट नहीं मिला।","auth/wrong-password":"पासवर्ड गलत है।","auth/too-many-requests":"बहुत कोशिशें हुई हैं। कुछ देर बाद फिर प्रयास करें।"})[e.code]||e.message}
@@ -142,33 +143,15 @@ function render(){
  $("monthIncome").textContent=money(inc);$("monthExpense").textContent=money(exp);$("monthNet").textContent=money(inc-exp);$("balance").textContent=money(allI-allE);$("todayExpense").textContent=money(entries.filter(x=>x.type==="expense"&&x.date===today()).reduce((a,x)=>a+Number(x.amount),0));
  const my=month.filter(x=>x.type==="expense"&&x.person==="मैं").reduce((a,x)=>a+Number(x.amount),0),sis=month.filter(x=>x.type==="expense"&&x.person==="बहन").reduce((a,x)=>a+Number(x.amount),0),shared=month.filter(x=>x.type==="expense"&&x.person==="साझा").reduce((a,x)=>a+Number(x.amount),0);
  $("myExpense").textContent=money(my);$("sisterExpense").textContent=money(sis);$("sharedExpense").textContent=money(shared);
- const fm=$("filterMonth").value, fp=$("filterPerson").value, ft=$("filterType").value;
+ const chosenDate=$("filterDate").value||today(), fm=chosenDate.slice(0,7), fp=$("filterPerson").value, ft=$("filterType").value;
  const list=usable.filter(x=>(!fm||(x.date||"").startsWith(fm))&&(!fp||x.person===fp)&&(!ft||x.type===ft));
- $("historyList").innerHTML=list.length?list.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${esc(x.date)} · ${esc(x.person)} · ${esc(x.category||"")}</small></div><div style="text-align:right"><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</b><br><button class="smallbtn" onclick="deleteEntry('${x.id}')">हटाएँ</button></div></div>`).join(""):'<p class="muted">इस फ़िल्टर में कोई रिकॉर्ड नहीं है।</p>';
-
- // Date-wise summary for the selected month; tapping a date opens its complete ledger.
- const monthDays=usable.filter(x=>!fm||(x.date||"").startsWith(fm));
- const byDay={};
- monthDays.forEach(x=>{const d=x.date||"";if(!d)return;if(!byDay[d])byDay[d]={income:0,expense:0,count:0};byDay[d][x.type]+=Number(x.amount||0);byDay[d].count++;});
- const days=[];
- if(fm){
-   const parts=fm.split("-").map(Number),year=parts[0],month=parts[1],count=new Date(year,month,0).getDate();
-   for(let day=1;day<=count;day++) days.push(`${year}-${String(month).padStart(2,"0")}-${String(day).padStart(2,"0")}`);
- } else {
-   days.push(...Object.keys(byDay).sort((a,b)=>b.localeCompare(a)));
- }
- days.reverse();
- if(!selectedDay || !days.includes(selectedDay)) selectedDay=days.includes(today())?today():(days[days.length-1]||"");
- $("dailySummary").innerHTML=days.length?days.map(d=>{
-   const v=byDay[d]||{income:0,expense:0,count:0},net=v.income-v.expense,dt=new Date(d+"T00:00:00");
-   const label=dt.toLocaleDateString("hi-IN",{day:"numeric",month:"long",weekday:"short"});
-   return `<button class="day-row ${d===selectedDay?"selected":""}" data-day="${d}">
-     <span><b>${label}</b><small>${v.count} लेन-देन · ${d}</small></span>
-     <span style="text-align:right"><span class="day-inc">+${money(v.income)}</span><small>कमाई</small><span class="day-exp">−${money(v.expense)}</span><small>खर्च</small></span>
-     <span class="day-net"><b class="${net>=0?"green":"red"}">${net>=0?"+":"−"}${money(Math.abs(net))}</b><small>दिन का अंतर</small></span>
-   </button>`;
- }).join(""):'<p class="muted">इस महीने अभी कोई कमाई या खर्च दर्ज नहीं है।</p>';
- document.querySelectorAll("[data-day]").forEach(b=>b.onclick=()=>{selectedDay=b.dataset.day;render();});
+ $("historyList").innerHTML=list.length?list.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${esc(x.date)} · ${esc(x.person)} · ${esc(x.category||"")}</small></div><div style="text-align:right"><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</b><br><button class="smallbtn" onclick="deleteEntry('${x.id}')">हटाएँ</button></div></div>`).join(""):'<p class="muted">इस महीने कोई रिकॉर्ड नहीं है।</p>';
+ // Show only the chosen date, not a long list of every day in the month.
+ selectedDay=chosenDate;
+ const chosenLabel=new Date(chosenDate+"T00:00:00").toLocaleDateString("hi-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+ $("dailySummary").innerHTML=`<button class="day-row selected" id="showChosenDay" style="width:100%;text-align:left"><span><b>${chosenLabel}</b><small>इस तारीख का पूरा हिसाब देखने के लिए टैप करें</small></span><span class="day-net"><b>हिसाब देखें →</b></span></button>`;
+ $("showChosenDay").onclick=()=>{selectedDay=chosenDate;render();};
+ const monthDays=usable.filter(x=>(x.date||"")===chosenDate);
  const dayDetail=monthDays.filter(x=>x.date===selectedDay).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
  if(selectedDay){
    const di=dayDetail.filter(x=>x.type==="income").reduce((a,x)=>a+Number(x.amount||0),0);
@@ -220,7 +203,7 @@ $("saveEntry").onclick=async()=>{
 };
 $("addCustom").onclick=async()=>{let n=$("customName").value.trim(),c=$("customCategory").value;if(!n){$("saveMsg").textContent="पहले सामान का नाम लिखें।";return}if(customItems.some(x=>x.name.toLowerCase()===n.toLowerCase())){$("saveMsg").textContent="यह सामान पहले से सूची में है।";return}try{await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"customItem",name:n,category:c,person:"साझा",date:today(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});$("customName").value="";$("saveMsg").textContent="सामान सेव हो गया और दोनों फोन पर दिखेगा ✓";}catch(e){$("saveMsg").textContent="सामान सेव नहीं हुआ: "+e.message}};
 document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x===b));["add","history","rent","report"].forEach(t=>$("tab-"+t).classList.toggle("hidden",t!==b.dataset.tab));if(b.dataset.tab==="rent")rentRender()});
-$("filterMonth").onchange=render;$("filterPerson").onchange=render;$("filterType").onchange=render;
+$("filterDate").onchange=render;$("filterPerson").onchange=render;$("filterType").onchange=render;
 async function rentRender(){if(!currentUser)return;let m=today().slice(0,7),paid=entries.some(x=>x.type==="expense"&&x.category==="रेंट"&&x.date?.startsWith(m)&&x.name==="मकान किराया");$("rentStatus").innerHTML=paid?'<span class="badge">इस महीने Paid ✓</span>':'<span class="badge pending">इस महीने का ₹2,100 किराया Pending</span>'; $("rentPaid").disabled=paid;$("rentPaid").textContent=paid?"इस महीने का किराया दर्ज हो चुका है":"₹2,100 किराया Paid दर्ज करें";}
 $("rentPaid").onclick=async()=>{const m=today().slice(0,7);if(entries.some(x=>x.category==="रेंट"&&x.date?.startsWith(m)&&x.name==="मकान किराया"))return;try{await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"expense",name:"मकान किराया",amount:2100,date:today(),person:"साझा",category:"रेंट",payment:"UPI",note:"मासिक किराया",createdAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){alert("किराया सेव नहीं हुआ: "+e.message)}};
 function download(name,content,type){const a=document.createElement("a"),u=URL.createObjectURL(new Blob([content],{type}));a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
