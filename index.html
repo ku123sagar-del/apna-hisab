@@ -313,7 +313,7 @@ function render(){
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 window.deleteEntry=async id=>{if(!confirm("यह रिकॉर्ड हटाएँ?"))return;try{await db.collection("users").doc(currentUser.uid).collection("entries").doc(id).delete();}catch(e){alert("हटाया नहीं जा सका: "+e.message)}};
 function fillCategories(list,selectId){$(selectId).innerHTML=list.map(x=>`<option>${esc(x)}</option>`).join("")}
-fillCategories(expenseCategories,"category");fillCategories(expenseCategories,"customCategory");
+fillCategories(expenseCategories,"category");
 function setMode(m){
  mode=m;$("expenseMode").classList.toggle("active",m==="expense");$("incomeMode").classList.toggle("active",m==="income");
  $("personLabel").textContent=m==="income"?"किसके पैसे मिले?":"किसका खर्च है?";
