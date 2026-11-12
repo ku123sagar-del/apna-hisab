@@ -22,6 +22,15 @@
 @media(max-width:420px){.day-row{grid-template-columns:1fr auto;}.day-row .day-net{grid-column:1/-1;text-align:right}.day-metrics{gap:5px}.day-metric{padding:8px}}
 
 @media(max-width:700px){.wrap{padding:13px}.grid{grid-template-columns:repeat(2,1fr)}.splitgrid{grid-template-columns:1fr 1fr}.items{grid-template-columns:repeat(3,1fr)}.stat strong{font-size:22px}.formgrid{grid-template-columns:1fr}.top{margin-top:3px}}
+
+/* Colorful personal-finance dashboard */
+:root{--purple:#7138e8;--orange:#ff7048;--navy:#211d3b;--mint:#16a085}
+body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a66bff);box-shadow:0 7px 18px #7138e833}.card{border:1px solid #ececf4;border-radius:22px;box-shadow:0 8px 26px #25204b0b}.nav button.active,.primary,.btn{background:linear-gradient(135deg,#7138e8,#9855f6);border-color:#7138e8}.btn.secondary{background:#f0ebff;color:#6032c4}.tabs button.active{background:linear-gradient(135deg,#7138e8,#9855f6)}.badge{background:#eee7ff;color:#6735d0}
+.dashboard-hero{background:radial-gradient(circle at 90% 10%,#51476f 0,transparent 32%),linear-gradient(135deg,#211d3b,#30294e 65%,#49366d);color:#fff;border:0;padding:21px;overflow:hidden;position:relative}.dashboard-hero .muted{color:#c7c3d8}.hero-balance{font-size:32px;font-weight:800;letter-spacing:-1px;margin:7px 0 15px}.hero-pills{display:flex;gap:8px;flex-wrap:wrap}.hero-pill{background:#ffffff15;border:1px solid #ffffff20;padding:7px 10px;border-radius:30px;font-size:11px;color:#eee}
+.analytics-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:14px 0}.analytics-card{padding:15px;border-radius:19px;min-width:0}.analytics-card small{font-size:12px;font-weight:600}.analytics-card strong{display:block;font-size:23px;margin-top:7px;letter-spacing:-.5px}.analytics-card.income{background:linear-gradient(145deg,#f0e8ff,#e7dcff);color:#6733d0}.analytics-card.expense{background:linear-gradient(145deg,#fff0e9,#ffe0d5);color:#d85b36}.analytics-card.saving{background:linear-gradient(145deg,#e5f8f2,#d6f1e8);color:#12836c}.analytics-card.today{background:linear-gradient(145deg,#eaf0ff,#dce6ff);color:#4268c9}.analytics-card .sub{font-size:11px;color:#6e7183;margin-top:4px}
+.chart-card{padding:17px;margin:14px 0}.chart-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.chart-head h2{font-size:17px;margin:0}.chart-legend{display:flex;gap:12px;font-size:11px;color:var(--muted)}.legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}.month-chart{height:155px;display:flex;align-items:end;justify-content:space-around;gap:9px;padding:12px 3px 0;border-bottom:1px solid #edf0f5}.month-col{height:100%;flex:1;display:flex;align-items:end;justify-content:center;gap:4px}.month-col .barx{width:min(18px,38%);border-radius:7px 7px 2px 2px;min-height:2px}.barx.in{background:linear-gradient(180deg,#a16aff,#7138e8)}.barx.out{background:linear-gradient(180deg,#ff9a72,#ff7048)}.month-labels{display:flex;justify-content:space-around;color:#85899b;font-size:10px;padding-top:8px}.donut-wrap{display:flex;align-items:center;gap:16px}.donut{width:132px;height:132px;border-radius:50%;flex:none;position:relative;background:#eee}.donut:after{content:"";position:absolute;inset:29px;background:white;border-radius:50%}.donut-center{position:absolute;z-index:1;inset:0;display:grid;place-content:center;text-align:center;font-size:11px;color:var(--muted)}.donut-center b{font-size:16px;color:var(--ink)}.cat-legend{display:flex;flex-direction:column;gap:9px;min-width:0;flex:1}.cat-row{display:flex;justify-content:space-between;gap:7px;font-size:11px}.cat-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.recent-list,.person-bars{display:flex;flex-direction:column;gap:9px}.recent-item{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid #eff0f5;border-radius:15px}.recent-icon{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;font-size:16px;background:#f0eaff;color:#7138e8;flex:none}.recent-item .detail{min-width:0;flex:1}.recent-item .detail b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}.recent-item .detail small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.recent-amount{font-size:13px;font-weight:800;white-space:nowrap}.person-line .row{font-size:12px;margin-bottom:5px}.person-line .bar{height:10px;background:#f0eef7}.person-line .bar span{background:linear-gradient(90deg,#7138e8,#a66bff);border-radius:10px}
+@media(max-width:420px){.wrap{padding:11px}.dashboard-hero{padding:18px}.hero-balance{font-size:29px}.analytics-card{padding:13px}.analytics-card strong{font-size:21px}.donut-wrap{gap:12px}.donut{width:116px;height:116px}.donut:after{inset:25px}.chart-card{padding:14px}}
+
 </style>
 </head>
 <body>
@@ -39,16 +48,22 @@
   </div>
   <main id="appView" class="hidden">
     <header class="top"><div class="brand"><div class="logo">₹</div><div>Apna Hisab<div class="muted">आपके पैसों का पूरा हिसाब</div></div></div><button id="logoutBtn" class="smallbtn">लॉगआउट</button></header>
-    <div class="grid">
-      <div class="card stat"><small>इस महीने मिले</small><strong class="green" id="monthIncome">₹0</strong></div>
-      <div class="card stat"><small>इस महीने खर्च</small><strong class="red" id="monthExpense">₹0</strong></div>
-      <div class="card stat"><small>इस महीने का अंतर</small><strong id="monthNet">₹0</strong></div>
-      <div class="card stat"><small>आज का खर्च</small><strong id="todayExpense">₹0</strong></div>
+    <div class="card section dashboard-hero">
+      <div class="row"><div class="muted">कुल उपलब्ध बैलेंस</div><span class="hero-pill" id="syncStatus">Cloud Sync</span></div>
+      <div class="hero-balance" id="balance">₹0</div>
+      <div class="hero-pills"><span class="hero-pill" id="heroIncome">आमदनी ₹0</span><span class="hero-pill" id="heroExpense">खर्च ₹0</span><span class="hero-pill" id="heroEntries">0 लेन-देन</span></div>
+      <div class="muted" style="margin-top:12px">यह दर्ज लेन-देन का बैलेंस है; बैंक/कैश बैलेंस से अलग हो सकता है।</div>
     </div>
-    <div class="card section">
-      <div class="row"><div><div class="muted">कुल दर्ज आमदनी − कुल दर्ज खर्च</div><h2 style="margin:5px 0">बैलेंस: <span id="balance">₹0</span></h2></div><span class="badge" id="syncStatus">Cloud Sync</span></div>
-      <div class="muted">बैलेंस आपके दर्ज किए गए लेन-देन का हिसाब है; बैंक/कैश बैलेंस से मिलान खुद करें।</div>
+    <div class="analytics-grid">
+      <div class="analytics-card income"><small>इस महीने की कमाई</small><strong id="monthIncome">₹0</strong><div class="sub">आमदनी</div></div>
+      <div class="analytics-card expense"><small>इस महीने का खर्च</small><strong id="monthExpense">₹0</strong><div class="sub">खर्च</div></div>
+      <div class="analytics-card saving"><small>इस महीने की बचत</small><strong id="monthNet">₹0</strong><div class="sub" id="savingRate">बचत दर 0%</div></div>
+      <div class="analytics-card today"><small>आज का खर्च</small><strong id="todayExpense">₹0</strong><div class="sub">आज दर्ज खर्च</div></div>
     </div>
+    <div class="card chart-card"><div class="chart-head"><h2>कमाई बनाम खर्च</h2><span class="badge">पिछले 6 महीने</span></div><div class="chart-legend"><span><i class="legend-dot" style="background:#7138e8"></i>कमाई</span><span><i class="legend-dot" style="background:#ff7048"></i>खर्च</span></div><div id="monthlyChart" class="month-chart"></div><div id="monthlyLabels" class="month-labels"></div></div>
+    <div class="card chart-card"><div class="chart-head"><h2>खर्च का विश्लेषण</h2><span class="muted">कैटेगरी के अनुसार</span></div><div class="donut-wrap"><div id="expenseDonut" class="donut"><div class="donut-center"><b id="donutTotal">₹0</b><span>कुल खर्च</span></div></div><div id="categoryLegend" class="cat-legend"></div></div></div>
+    <div class="card chart-card"><div class="chart-head"><h2>किसने कितना खर्च किया?</h2><span class="badge">इस महीने</span></div><div class="person-bars" id="personAnalytics"></div></div>
+    <div class="card chart-card"><div class="chart-head"><h2>हाल के लेन-देन</h2><span class="muted">नवीनतम 5</span></div><div id="recentTransactions" class="recent-list"></div></div>
     <div class="card section">
       <h2>इस महीने किसने कितना खर्च किया?</h2>
       <div class="splitgrid">
@@ -138,9 +153,21 @@ function watchEntries(){
   $("syncStatus").textContent="जुड़ रहा है…";
   unsubscribeEntries=db.collection("users").doc(currentUser.uid).collection("entries").orderBy("date","desc").onSnapshot(s=>{entries=s.docs.map(d=>({id:d.id,...d.data()}));customItems=entries.filter(x=>x.type==="customItem").map(x=>({id:x.id,name:x.name,category:x.category||"अन्य"}));showItems();$("syncStatus").textContent="Live Sync ✓";render();},e=>{$("syncStatus").textContent="Sync समस्या";$("saveMsg").textContent="डेटा लोड नहीं हुआ: "+e.message;});
 }
+
+function renderAnalytics(usable,month,inc,exp,allI,allE){
+ const total=allI-allE;$('heroIncome').textContent='आमदनी '+money(allI);$('heroExpense').textContent='खर्च '+money(allE);$('heroEntries').textContent=usable.length+' लेन-देन';
+ $('savingRate').textContent='बचत दर '+(inc?Math.round((inc-exp)/inc*100):0)+'%';
+ const months=[];const now=new Date();for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1),key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');const rows=usable.filter(x=>(x.date||'').startsWith(key));months.push({label:d.toLocaleDateString('hi-IN',{month:'short'}),income:rows.filter(x=>x.type==='income').reduce((a,x)=>a+Number(x.amount||0),0),expense:rows.filter(x=>x.type==='expense').reduce((a,x)=>a+Number(x.amount||0),0)});}
+ const max=Math.max(1,...months.flatMap(x=>[x.income,x.expense]));$('monthlyChart').innerHTML=months.map(x=>`<div class="month-col" title="${x.label}: कमाई ${money(x.income)}, खर्च ${money(x.expense)}"><div class="barx in" style="height:${Math.max(2,x.income/max*100)}%"></div><div class="barx out" style="height:${Math.max(2,x.expense/max*100)}%"></div></div>`).join('');$('monthlyLabels').innerHTML=months.map(x=>`<span>${x.label}</span>`).join('');
+ const cats={};month.filter(x=>x.type==='expense').forEach(x=>cats[x.category||'अन्य']=(cats[x.category||'अन्य']||0)+Number(x.amount||0));const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]),sum=sorted.reduce((a,x)=>a+x[1],0),colors=['#7138e8','#ff7048','#25213e','#16a085','#e4a52d','#4b83db'];let angle=0;const slices=sorted.map(([k,v],i)=>{const start=angle;angle+=sum?v/sum*100:0;return `${colors[i%colors.length]} ${start}% ${angle}%`});$('expenseDonut').style.background=slices.length?`conic-gradient(${slices.join(',')})`:'#ececf4';$('donutTotal').textContent=money(sum);$('categoryLegend').innerHTML=sorted.length?sorted.slice(0,5).map(([k,v],i)=>`<div class="cat-row"><span class="cat-name"><i class="legend-dot" style="background:${colors[i%colors.length]}"></i>${esc(k)}</span><b>${money(v)}</b></div>`).join(''):'<span class="muted">अभी खर्च दर्ज नहीं है</span>';
+ const people=['मैं','बहन','साझा'],vals=people.map(person=>({person,value:month.filter(x=>x.type==='expense'&&x.person===person).reduce((a,x)=>a+Number(x.amount||0),0)})),mx=Math.max(1,...vals.map(x=>x.value));$('personAnalytics').innerHTML=vals.map(x=>`<div class="person-line"><div class="row"><span>${x.person}</span><b>${money(x.value)}</b></div><div class="bar"><span style="width:${x.value/mx*100}%"></span></div></div>`).join('');
+ const recent=[...usable].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);$('recentTransactions').innerHTML=recent.length?recent.map(x=>`<div class="recent-item"><div class="recent-icon">${x.type==='income'?'↙':'↗'}</div><div class="detail"><b>${esc(x.name)}</b><small>${esc(x.date||'')} · ${esc(x.person||'')} · ${esc(x.category||'')}</small></div><div class="recent-amount ${x.type==='income'?'green':'red'}">${x.type==='income'?'+':'−'}${money(x.amount)}</div></div>`).join(''):'<p class="muted">अभी कोई लेन-देन नहीं है।</p>';
+}
+
 function render(){
  const usable=entries.filter(x=>x.type==="income"||x.type==="expense"); const m=today().slice(0,7), month=usable.filter(x=>(x.date||"").startsWith(m)), inc=month.filter(x=>x.type==="income").reduce((a,x)=>a+Number(x.amount),0),exp=month.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount),0),allI=usable.filter(x=>x.type==="income").reduce((a,x)=>a+Number(x.amount),0),allE=usable.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount),0);
  $("monthIncome").textContent=money(inc);$("monthExpense").textContent=money(exp);$("monthNet").textContent=money(inc-exp);$("balance").textContent=money(allI-allE);$("todayExpense").textContent=money(entries.filter(x=>x.type==="expense"&&x.date===today()).reduce((a,x)=>a+Number(x.amount),0));
+ renderAnalytics(usable,month,inc,exp,allI,allE);
  const my=month.filter(x=>x.type==="expense"&&x.person==="मैं").reduce((a,x)=>a+Number(x.amount),0),sis=month.filter(x=>x.type==="expense"&&x.person==="बहन").reduce((a,x)=>a+Number(x.amount),0),shared=month.filter(x=>x.type==="expense"&&x.person==="साझा").reduce((a,x)=>a+Number(x.amount),0);
  $("myExpense").textContent=money(my);$("sisterExpense").textContent=money(sis);$("sharedExpense").textContent=money(shared);
  const chosenDate=$("filterDate").value||today(), fm=chosenDate.slice(0,7), fp=$("filterPerson").value, ft=$("filterType").value;
