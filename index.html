@@ -23,7 +23,14 @@
 
 @media(max-width:700px){.wrap{padding:13px}.grid{grid-template-columns:repeat(2,1fr)}.splitgrid{grid-template-columns:1fr 1fr}.items{grid-template-columns:repeat(3,1fr)}.stat strong{font-size:22px}.formgrid{grid-template-columns:1fr}.top{margin-top:3px}}
 
-/* Colorful personal-finance dashboard */
+
+#chartDrilldown{border:1px solid #ded4ff;background:linear-gradient(145deg,#fff,#faf8ff)}
+#chartDrilldown .recent-item{background:#fff}
+.cat-row{cursor:pointer;padding:5px 6px;border-radius:9px}
+.cat-row:active,.month-col:active,.person-line:active{background:#f1ebff}
+.month-col{cursor:pointer;border-radius:8px 8px 0 0}
+.person-line{cursor:pointer;padding:5px 7px;border-radius:10px}
+.person-summary-duplicate{display:none!important}\n\n/* Colorful personal-finance dashboard */
 :root{--purple:#7138e8;--orange:#ff7048;--navy:#211d3b;--mint:#16a085}
 body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a66bff);box-shadow:0 7px 18px #7138e833}.card{border:1px solid #ececf4;border-radius:22px;box-shadow:0 8px 26px #25204b0b}.nav button.active,.primary,.btn{background:linear-gradient(135deg,#7138e8,#9855f6);border-color:#7138e8}.btn.secondary{background:#f0ebff;color:#6032c4}.tabs button.active{background:linear-gradient(135deg,#7138e8,#9855f6)}.badge{background:#eee7ff;color:#6735d0}
 .dashboard-hero{background:radial-gradient(circle at 90% 10%,#51476f 0,transparent 32%),linear-gradient(135deg,#211d3b,#30294e 65%,#49366d);color:#fff;border:0;padding:21px;overflow:hidden;position:relative}.dashboard-hero .muted{color:#c7c3d8}.hero-balance{font-size:32px;font-weight:800;letter-spacing:-1px;margin:7px 0 15px}.hero-pills{display:flex;gap:8px;flex-wrap:wrap}.hero-pill{background:#ffffff15;border:1px solid #ffffff20;padding:7px 10px;border-radius:30px;font-size:11px;color:#eee}
@@ -32,107 +39,49 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
 @media(max-width:420px){.wrap{padding:11px}.dashboard-hero{padding:18px}.hero-balance{font-size:29px}.analytics-card{padding:13px}.analytics-card strong{font-size:21px}.donut-wrap{gap:12px}.donut{width:116px;height:116px}.donut:after{inset:25px}.chart-card{padding:14px}}
 
 
-/* Compact layout: avoid repeating the person chart and selected-date preview */
-.duplicate-person-summary{display:none!important}
-#dailySummary{display:none!important}
-
-/* Premium compact Records / day-ledger design */
-#tab-history>.card{
-  border:1px solid #e8e8f2;
-  border-radius:24px;
-  box-shadow:0 10px 28px rgba(38,29,73,.07);
-  padding:19px;
-  margin-bottom:16px;
-  background:linear-gradient(180deg,#fff 0%,#fcfbff 100%);
+/* Premium day ledger cards to match the colorful dashboard */
+#tab-history>.card,#dailyDetail{
+ border:1px solid #e8e5f0;border-radius:24px;
+ box-shadow:0 9px 25px rgba(38,29,73,.07);
+ background:linear-gradient(145deg,#fff 0%,#fbfaff 100%);
 }
 #tab-history>.card:first-child{
-  background:linear-gradient(145deg,#fff 0%,#f5f0ff 100%);
-  border-color:#e8defe;
+ background:linear-gradient(145deg,#fff 0%,#f3edff 100%);
+ border-color:#e5d9ff;
 }
-#tab-history h2{font-size:20px;letter-spacing:-.35px}
 #tab-history #filterDate{
-  border:2px solid #ded2ff!important;
-  border-radius:16px!important;
-  background:#fff;
-  min-height:56px;
-  font-weight:700;
-  color:#29213f;
-  box-shadow:0 4px 12px rgba(113,56,232,.07);
-  accent-color:#7138e8;
+ border:2px solid #d9c9ff!important;border-radius:16px!important;
+ min-height:56px;background:#fff;font-weight:700;color:#29213f;
+ box-shadow:0 4px 13px rgba(113,56,232,.08);
 }
 #dailyDetail{
-  background:linear-gradient(145deg,#211d3b 0%,#352653 58%,#4b3473 100%)!important;
-  color:#fff;
-  border:0!important;
-  border-radius:25px!important;
-  box-shadow:0 12px 28px rgba(42,30,75,.18)!important;
-  padding:20px!important;
-  margin-bottom:16px;
+ display:block!important;padding:18px!important;margin:14px 0 18px;
+ background:linear-gradient(145deg,#211d3b 0%,#382858 62%,#51377c 100%)!important;
+ color:#fff;border:0!important;box-shadow:0 12px 28px rgba(42,30,75,.18)!important;
 }
+#dailyDetail.hidden{display:none!important}
 #dailyDetail h2,#dailyDetail h3{color:#fff}
-#dailyDetail .badge{
-  background:#ffffff20!important;
-  color:#fff!important;
-  border:1px solid #ffffff30;
-}
-#dailyDetail .day-metrics{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:8px;
-  margin:16px 0;
-}
-#dailyDetail .day-metric{
-  border:1px solid #ffffff22;
-  border-radius:16px;
-  padding:12px 10px;
-  background:#ffffff12;
-  min-width:0;
-}
-#dailyDetail .day-metric small{color:#d5cde7;font-size:11px}
-#dailyDetail .day-metric b{display:block;font-size:clamp(15px,4vw,20px);margin-top:7px;overflow-wrap:anywhere}
-#dailyDetail .green{color:#6ee7bd!important}
-#dailyDetail .red{color:#ff9b87!important}
-#dailyDetail .day-ledger-list{display:flex;flex-direction:column;gap:10px}
-#dailyDetail .entry{
-  background:#fff;
-  color:#202b36;
-  border:1px solid #eeeaf7;
-  border-radius:17px;
-  padding:13px;
-  box-shadow:0 4px 12px rgba(0,0,0,.06);
-}
-#dailyDetail .entry small{color:#777d8a}
-#dailyDetail .entry .smallbtn{
-  background:#f0eaff;
-  color:#6334c6;
-  border-radius:10px;
-}
-#dailyDetail .day-empty{
-  background:#ffffff14;
-  border:1px dashed #ffffff55;
-  border-radius:16px;
-  color:#e5def2;
-  padding:18px 14px;
-  text-align:center;
-}
-#tab-history .filters select{
-  border:1px solid #e3dcf2;
-  border-radius:13px;
-  background:#f8f6ff;
-  padding:11px;
-}
-#tab-history #historyList .entry{
-  border-radius:16px;
-  border:1px solid #eeeaf5;
-  margin-bottom:8px;
-  padding:13px;
-}
+#dailyDetail .badge{background:#ffffff20!important;color:#fff!important;border:1px solid #ffffff35}
+#dailyDetail .day-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0}
+#dailyDetail .day-metrics>div{background:#ffffff13;border:1px solid #ffffff24;border-radius:16px;padding:12px 9px;min-width:0}
+#dailyDetail .day-metrics small{color:#d9d1e8;font-size:11px}
+#dailyDetail .day-metrics b{display:block;font-size:clamp(15px,4vw,20px);margin-top:7px;overflow-wrap:anywhere}
+#dailyDetail .green{color:#75e5bf!important}
+#dailyDetail .red{color:#ff9a87!important}
+#dailyDetail .list{display:flex;flex-direction:column;gap:9px}
+#dailyDetail .entry{background:#fff;color:#202b36;border:1px solid #eeeaf7;border-radius:16px;padding:12px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+#dailyDetail .entry small{color:#7b8190}
+#dailyDetail .entry .smallbtn{background:#f0eaff;color:#6334c6;border-radius:10px}
+#tab-history .filters select{border:1px solid #e3dcf2;border-radius:13px;background:#f8f6ff;padding:11px}
+#tab-history #historyList .entry{border:1px solid #eeeaf5;border-radius:16px;padding:12px;margin-bottom:8px}
+#quickItems{display:none!important}
+#customManage .entry{border-radius:13px}
 @media(max-width:420px){
-  #tab-history>.card{padding:15px;border-radius:20px}
-  #dailyDetail{padding:16px!important}
-  #dailyDetail .day-metrics{gap:6px}
-  #dailyDetail .day-metric{padding:10px 7px}
-  #dailyDetail .day-metric small{font-size:10px}
+ #tab-history>.card,#dailyDetail{border-radius:20px}
+ #dailyDetail{padding:15px!important}
+ #dailyDetail .day-metrics{gap:6px}
+ #dailyDetail .day-metrics>div{padding:10px 7px}
+ #dailyDetail .day-metrics small{font-size:10px}
 }
 
 </style>
@@ -167,8 +116,9 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
     <div class="card chart-card"><div class="chart-head"><h2>कमाई बनाम खर्च</h2><span class="badge">पिछले 6 महीने</span></div><div class="chart-legend"><span><i class="legend-dot" style="background:#7138e8"></i>कमाई</span><span><i class="legend-dot" style="background:#ff7048"></i>खर्च</span></div><div id="monthlyChart" class="month-chart"></div><div id="monthlyLabels" class="month-labels"></div></div>
     <div class="card chart-card"><div class="chart-head"><h2>खर्च का विश्लेषण</h2><span class="muted">कैटेगरी के अनुसार</span></div><div class="donut-wrap"><div id="expenseDonut" class="donut"><div class="donut-center"><b id="donutTotal">₹0</b><span>कुल खर्च</span></div></div><div id="categoryLegend" class="cat-legend"></div></div></div>
     <div class="card chart-card"><div class="chart-head"><h2>किसने कितना खर्च किया?</h2><span class="badge">इस महीने</span></div><div class="person-bars" id="personAnalytics"></div></div>
+    <div class="card chart-card hidden" id="chartDrilldown"><div class="chart-head"><h2 id="drillTitle">विस्तृत हिसाब</h2><button class="smallbtn" id="closeDrilldown" type="button">बंद करें ✕</button></div><div id="drillSummary" class="muted"></div><div id="drillRows" class="recent-list" style="margin-top:10px"></div></div>
     <div class="card chart-card"><div class="chart-head"><h2>हाल के लेन-देन</h2><span class="muted">नवीनतम 5</span></div><div id="recentTransactions" class="recent-list"></div></div>
-    <div class="card section duplicate-person-summary">
+    <div class="card section person-summary-duplicate" aria-hidden="true">
       <h2>इस महीने किसने कितना खर्च किया?</h2>
       <div class="splitgrid">
         <div class="stat"><small>मेरा खर्च</small><strong id="myExpense">₹0</strong></div>
@@ -185,8 +135,8 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
         <div class="tabs"><button class="active" id="expenseMode">खर्च दर्ज करें</button><button id="incomeMode">पैसे मिले</button></div>
         <div class="section">
           <div class="field"><label id="personLabel">किसका खर्च है?</label><select id="person"><option>मैं</option><option>बहन</option><option>साझा</option></select></div>
-          <div class="field section"><label id="itemLabel">सामान / खर्च का नाम</label><input id="itemName" list="itemOptions" placeholder="जैसे दूध, तेल, SSC फॉर्म"><datalist id="itemOptions"></datalist></div>
-          <div class="items" id="quickItems"></div>
+          <div class="field section"><label id="itemLabel">सामान / खर्च का नाम</label><input id="itemName" list="itemOptions" autocomplete="off" placeholder="सामान खोजें या नाम लिखें…"><datalist id="itemOptions"></datalist></div>
+          <div class="items hidden" id="quickItems"></div>
           <div class="formgrid section">
             <div class="field"><label>रकम (₹)</label><input id="amount" type="number" min="1" step="0.01" placeholder="0"></div>
             <div class="field"><label>तारीख</label><input id="date" type="date"></div>
@@ -203,9 +153,9 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
     <section id="tab-history" class="hidden">
       <div class="card section">
         <div class="row"><h2>तारीख के अनुसार पूरा हिसाब</h2></div>
-        <p class="muted">तारीख चुनते ही उस दिन की पूरी कमाई, खर्च और सभी एंट्री नीचे दिखेंगी।</p>
+        <p class="muted">तारीख चुनते ही उस दिन का पूरा हिसाब नीचे दिखेगा।</p>
         <div class="field"><label>तारीख चुनें (Date · Month · Year)</label><input id="filterDate" type="date" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:16px"></div>
-        <div id="dailySummary" class="list" hidden></div>
+        <div id="dailySummary" class="list hidden"></div>
       </div>
       <div id="dailyDetail" class="card section hidden"></div>
       <div class="card section"><h2>सभी लेन-देन का रिकॉर्ड</h2>
@@ -238,12 +188,23 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(), db=firebase.firestore();
-let currentUser=null, entries=[], mode="expense", customItems=[], unsubscribeEntries=null, selectedDay="";
+let currentUser=null, entries=[], mode="expense", customItems=[], hiddenDefaultItems=[], unsubscribeEntries=null, selectedDay="";
 const expenseCategories=["किराना और किचन","फल","ड्राई फ्रूट्स","दूध और नाश्ता","सब्जियाँ","बहन – मेकअप","बहन – स्किन केयर","बहन – हेयर केयर","बहन – पर्सनल केयर","बाथरूम और सफाई","कपड़े / शॉपिंग","पढ़ाई / फॉर्म","यात्रा","बाहर खाना","स्वास्थ्य","मोबाइल / इंटरनेट","घर की जरूरतें","रेंट","अन्य"];
 const incomeCategories=["वेतन / नौकरी","परिवार से मिले","बिजनेस / व्यापार","किराया मिला","ब्याज / निवेश","रिफंड","उपहार","अन्य आमदनी"];
 const incomeSources=["वेतन / Salary","घर से मिले पैसे","बहन से मिले पैसे","पापा से मिले पैसे","बिजनेस / व्यापार","किराया मिला","ब्याज मिला","रिफंड / Refund","उपहार मिला","अन्य"];
 const defaults=[
-["खाने का तेल","किराना और किचन"],["सरसों तेल","किराना और किचन"],["नमक","किराना और किचन"],["चीनी","किराना और किचन"],["हल्दी","किराना और किचन"],["मिर्च पाउडर","किराना और किचन"],["धनिया पाउडर","किराना और किचन"],["जीरा","किराना और किचन"],["गरम मसाला","किराना और किचन"],["राय","किराना और किचन"],["हींग","किराना और किचन"],["चावल","किराना और किचन"],["आटा","किराना और किचन"],["दाल","किराना और किचन"],["सूजी","किराना और किचन"],["बेसन","किराना और किचन"],["चायपत्ती","किराना और किचन"],["बिस्कुट","किराना और किचन"],["दूध","दूध और नाश्ता"],["दही","दूध और नाश्ता"],["पनीर","दूध और नाश्ता"],["ब्रेड","दूध और नाश्ता"],["अंडे","दूध और नाश्ता"],["मक्खन","दूध और नाश्ता"],["केला","फल"],["सेब","फल"],["संतरा","फल"],["अमरूद","फल"],["अनार","फल"],["अंगूर","फल"],["आम","फल"],["पपीता","फल"],["तरबूज","फल"],["मौसमी","फल"],["बादाम","ड्राई फ्रूट्स"],["काजू","ड्राई फ्रूट्स"],["किशमिश","ड्राई फ्रूट्स"],["अखरोट","ड्राई फ्रूट्स"],["खजूर","ड्राई फ्रूट्स"],["आलू","सब्जियाँ"],["प्याज","सब्जियाँ"],["टमाटर","सब्जियाँ"],["हरी मिर्च","सब्जियाँ"],["लहसुन","सब्जियाँ"],["अदरक","सब्जियाँ"],["गोभी","सब्जियाँ"],["भिंडी","सब्जियाँ"],["बैंगन","सब्जियाँ"],["पालक","सब्जियाँ"],["फेसवॉश","बहन – स्किन केयर"],["मॉइस्चराइजर","बहन – स्किन केयर"],["सनस्क्रीन","बहन – स्किन केयर"],["क्रीम","बहन – स्किन केयर"],["लिप बाम","बहन – स्किन केयर"],["काजल","बहन – मेकअप"],["लिपस्टिक","बहन – मेकअप"],["फाउंडेशन","बहन – मेकअप"],["नेल पॉलिश","बहन – मेकअप"],["मेकअप रिमूवर","बहन – मेकअप"],["कंघी","बहन – हेयर केयर"],["हेयर ऑयल","बहन – हेयर केयर"],["हेयर सीरम","बहन – हेयर केयर"],["हेयर क्लिप","बहन – पर्सनल केयर"],["सैनिटरी पैड","बहन – पर्सनल केयर"],["नहाने का साबुन","बाथरूम और सफाई"],["कपड़े धोने का साबुन","बाथरूम और सफाई"],["डिटर्जेंट पाउडर","बाथरूम और सफाई"],["Colgate / टूथपेस्ट","बाथरूम और सफाई"],["टूथब्रश","बाथरूम और सफाई"],["शैम्पू","बाथरूम और सफाई"],["हैंडवॉश","बाथरूम और सफाई"],["फिनाइल","बाथरूम और सफाई"],["डिशवॉश बार","बाथरूम और सफाई"],["बाल्टी","घर की जरूरतें"],["मग","घर की जरूरतें"],["झाड़ू","घर की जरूरतें"],["पोछा","घर की जरूरतें"],["डस्टबिन","घर की जरूरतें"],["माचिस","अन्य"],["मोमबत्ती","अन्य"],["गैस सिलेंडर","अन्य"],["किताब","पढ़ाई / फॉर्म"],["कॉपी","पढ़ाई / फॉर्म"],["पेन","पढ़ाई / फॉर्म"],["SSC फॉर्म","पढ़ाई / फॉर्म"],["Railway फॉर्म","पढ़ाई / फॉर्म"],["JSSC फॉर्म","पढ़ाई / फॉर्म"],["शर्ट","कपड़े / शॉपिंग"],["जूते","कपड़े / शॉपिंग"],["बस किराया","यात्रा"],["ट्रेन टिकट","यात्रा"],["चाय","बाहर खाना"],["नाश्ता","बाहर खाना"],["दवाई","स्वास्थ्य"],["मोबाइल रिचार्ज","मोबाइल / इंटरनेट"]
+["खाने का तेल","किराना और किचन"],["नमक","किराना और किचन"],["चीनी","किराना और किचन"],["मिर्च पाउडर","किराना और किचन"],["धनिया पाउडर","किराना और किचन"],["जीरा","किराना और किचन"],["गरम मसाला","किराना और किचन"],["दाल","किराना और किचन"],["सूजी","किराना और किचन"],["बेसन","किराना और किचन"],["चायपत्ती","किराना और किचन"],["बिस्कुट","किराना और किचन"],
+["दूध","दूध और नाश्ता"],["दही","दूध और नाश्ता"],["पनीर","दूध और नाश्ता"],["ब्रेड","दूध और नाश्ता"],["अंडे","दूध और नाश्ता"],
+["केला","फल"],["सेब","फल"],["संतरा","फल"],["अमरूद","फल"],["अनार","फल"],["अंगूर","फल"],["आम","फल"],
+["बादाम","ड्राई फ्रूट्स"],["काजू","ड्राई फ्रूट्स"],["किशमिश","ड्राई फ्रूट्स"],["अखरोट","ड्राई फ्रूट्स"],["खजूर","ड्राई फ्रूट्स"],
+["आलू","सब्जियाँ"],["प्याज","सब्जियाँ"],["टमाटर","सब्जियाँ"],["सब्जी","सब्जियाँ"],["पालक","सब्जियाँ"],
+["फेसवॉश","बहन – स्किन केयर"],["मॉइस्चराइजर","बहन – स्किन केयर"],["सनस्क्रीन","बहन – स्किन केयर"],["क्रीम","बहन – स्किन केयर"],["लिप बाम","बहन – स्किन केयर"],
+["काजल","बहन – मेकअप"],["लिपस्टिक","बहन – मेकअप"],["नेल पॉलिश","बहन – मेकअप"],["मेकअप रिमूवर","बहन – मेकअप"],
+["कंघी","बहन – हेयर केयर"],["हेयर ऑयल","बहन – हेयर केयर"],["हेयर सीरम","बहन – हेयर केयर"],["हेयर क्लिप","बहन – पर्सनल केयर"],["सैनिटरी पैड","बहन – पर्सनल केयर"],
+["नहाने का साबुन","बाथरूम और सफाई"],["कपड़े धोने का साबुन","बाथरूम और सफाई"],["बर्तन धोने का साबुन","बाथरूम और सफाई"],["डिटर्जेंट पाउडर","बाथरूम और सफाई"],["Colgate / टूथपेस्ट","बाथरूम और सफाई"],["टूथब्रश","बाथरूम और सफाई"],["शैम्पू","बाथरूम और सफाई"],["हैंडवॉश","बाथरूम और सफाई"],["फिनाइल","बाथरूम और सफाई"],["डिशवॉश बार","बाथरूम और सफाई"],
+["बाल्टी","घर की जरूरतें"],["मग","घर की जरूरतें"],["झाड़ू","घर की जरूरतें"],["पोछा","घर की जरूरतें"],["डस्टबिन","घर की जरूरतें"],["माचिस","अन्य"],["मोमबत्ती","अन्य"],["गैस सिलेंडर","अन्य"],
+["किताब","पढ़ाई / फॉर्म"],["कॉपी","पढ़ाई / फॉर्म"],["पेन","पढ़ाई / फॉर्म"],["SSC फॉर्म","पढ़ाई / फॉर्म"],["Railway फॉर्म","पढ़ाई / फॉर्म"],["JSSC फॉर्म","पढ़ाई / फॉर्म"],
+["शर्ट","कपड़े / शॉपिंग"],["जूते","कपड़े / शॉपिंग"],["बस किराया","यात्रा"],["ट्रेन टिकट","यात्रा"],["चाय","बाहर खाना"],["नाश्ता","बाहर खाना"],["दवाई","स्वास्थ्य"],["मोबाइल रिचार्ज","मोबाइल / इंटरनेट"]
 ];
 const $=id=>document.getElementById(id), money=n=>"₹"+Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:2});
 function today(){const d=new Date(),y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");return `${y}-${m}-${day}`}
@@ -255,18 +216,31 @@ auth.onAuthStateChanged(async user=>{currentUser=user;$("authView").classList.to
 $("logoutBtn").onclick=()=>auth.signOut();
 function watchEntries(){
   $("syncStatus").textContent="जुड़ रहा है…";
-  unsubscribeEntries=db.collection("users").doc(currentUser.uid).collection("entries").orderBy("date","desc").onSnapshot(s=>{entries=s.docs.map(d=>({id:d.id,...d.data()}));customItems=entries.filter(x=>x.type==="customItem").map(x=>({id:x.id,name:x.name,category:x.category||"अन्य"}));showItems();$("syncStatus").textContent="Live Sync ✓";render();},e=>{$("syncStatus").textContent="Sync समस्या";$("saveMsg").textContent="डेटा लोड नहीं हुआ: "+e.message;});
+  unsubscribeEntries=db.collection("users").doc(currentUser.uid).collection("entries").orderBy("date","desc").onSnapshot(s=>{entries=s.docs.map(d=>({id:d.id,...d.data()}));customItems=entries.filter(x=>x.type==="customItem").map(x=>({id:x.id,name:x.name,category:x.category||"अन्य"}));hiddenDefaultItems=entries.filter(x=>x.type==="hiddenDefault").map(x=>x.name);showItems();$("syncStatus").textContent="Live Sync ✓";render();},e=>{$("syncStatus").textContent="Sync समस्या";$("saveMsg").textContent="डेटा लोड नहीं हुआ: "+e.message;});
 }
 
+function showChartDetails(title,rows,summary){
+ const panel=$("chartDrilldown");if(!panel)return;
+ const sorted=[...rows].sort((a,b)=>(b.date||"").localeCompare(a.date||"")||(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+ $("drillTitle").textContent=title;$("drillSummary").textContent=summary||`${sorted.length} लेन-देन`;
+ $("drillRows").innerHTML=sorted.length?sorted.map(x=>`<div class="recent-item"><div class="recent-icon">${x.type==="income"?"↙":"↗"}</div><div class="detail"><b>${esc(x.name)}</b><small>${esc(x.date||"")} · ${esc(x.person||"")} · ${esc(x.category||"")}${x.note?" · "+esc(x.note):""}</small></div><div class="recent-amount ${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</div></div>`).join(""):'<p class="muted">इस चयन में कोई लेन-देन नहीं मिला।</p>';
+ panel.classList.remove("hidden");panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
 function renderAnalytics(usable,month,inc,exp,allI,allE){
  const total=allI-allE;$('heroIncome').textContent='आमदनी '+money(allI);$('heroExpense').textContent='खर्च '+money(allE);$('heroEntries').textContent=usable.length+' लेन-देन';
  $('savingRate').textContent='बचत दर '+(inc?Math.round((inc-exp)/inc*100):0)+'%';
- const months=[];const now=new Date();for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1),key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');const rows=usable.filter(x=>(x.date||'').startsWith(key));months.push({label:d.toLocaleDateString('hi-IN',{month:'short'}),income:rows.filter(x=>x.type==='income').reduce((a,x)=>a+Number(x.amount||0),0),expense:rows.filter(x=>x.type==='expense').reduce((a,x)=>a+Number(x.amount||0),0)});}
- const max=Math.max(1,...months.flatMap(x=>[x.income,x.expense]));$('monthlyChart').innerHTML=months.map(x=>`<div class="month-col" title="${x.label}: कमाई ${money(x.income)}, खर्च ${money(x.expense)}"><div class="barx in" style="height:${Math.max(2,x.income/max*100)}%"></div><div class="barx out" style="height:${Math.max(2,x.expense/max*100)}%"></div></div>`).join('');$('monthlyLabels').innerHTML=months.map(x=>`<span>${x.label}</span>`).join('');
- const cats={};month.filter(x=>x.type==='expense').forEach(x=>cats[x.category||'अन्य']=(cats[x.category||'अन्य']||0)+Number(x.amount||0));const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]),sum=sorted.reduce((a,x)=>a+x[1],0),colors=['#7138e8','#ff7048','#25213e','#16a085','#e4a52d','#4b83db'];let angle=0;const slices=sorted.map(([k,v],i)=>{const start=angle;angle+=sum?v/sum*100:0;return `${colors[i%colors.length]} ${start}% ${angle}%`});$('expenseDonut').style.background=slices.length?`conic-gradient(${slices.join(',')})`:'#ececf4';$('donutTotal').textContent=money(sum);$('categoryLegend').innerHTML=sorted.length?sorted.slice(0,5).map(([k,v],i)=>`<div class="cat-row"><span class="cat-name"><i class="legend-dot" style="background:${colors[i%colors.length]}"></i>${esc(k)}</span><b>${money(v)}</b></div>`).join(''):'<span class="muted">अभी खर्च दर्ज नहीं है</span>';
- const people=['मैं','बहन','साझा'],vals=people.map(person=>({person,value:month.filter(x=>x.type==='expense'&&x.person===person).reduce((a,x)=>a+Number(x.amount||0),0)})),mx=Math.max(1,...vals.map(x=>x.value));$('personAnalytics').innerHTML=vals.map(x=>`<div class="person-line"><div class="row"><span>${x.person}</span><b>${money(x.value)}</b></div><div class="bar"><span style="width:${x.value/mx*100}%"></span></div></div>`).join('');
+ const months=[];const now=new Date();for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1),key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');const rows=usable.filter(x=>(x.date||'').startsWith(key));months.push({key,label:d.toLocaleDateString('hi-IN',{month:'short'}),income:rows.filter(x=>x.type==='income').reduce((a,x)=>a+Number(x.amount||0),0),expense:rows.filter(x=>x.type==='expense').reduce((a,x)=>a+Number(x.amount||0),0)});}
+ const max=Math.max(1,...months.flatMap(x=>[x.income,x.expense]));$('monthlyChart').innerHTML=months.map((x,i)=>`<div class="month-col" data-month-index="${i}" role="button" tabindex="0" aria-label="${x.label}: कमाई ${money(x.income)}, खर्च ${money(x.expense)}" title="${x.label}: कमाई ${money(x.income)}, खर्च ${money(x.expense)}"><div class="barx in" style="height:${Math.max(2,x.income/max*100)}%"></div><div class="barx out" style="height:${Math.max(2,x.expense/max*100)}%"></div></div>`).join('');$('monthlyLabels').innerHTML=months.map(x=>`<span>${x.label}</span>`).join('');
+ document.querySelectorAll('[data-month-index]').forEach(el=>{const open=()=>{const m=months[Number(el.dataset.monthIndex)],key=m.key;showChartDetails(m.label+' का पूरा हिसाब',usable.filter(x=>(x.date||'').startsWith(key)),`कमाई ${money(m.income)} · खर्च ${money(m.expense)} · अंतर ${money(m.income-m.expense)}`)};el.onclick=open;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}});
+ const cats={};month.filter(x=>x.type==='expense').forEach(x=>cats[x.category||'अन्य']=(cats[x.category||'अन्य']||0)+Number(x.amount||0));const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]),sum=sorted.reduce((a,x)=>a+x[1],0),colors=['#7138e8','#ff7048','#25213e','#16a085','#e4a52d','#4b83db'];let angle=0;const slices=sorted.map(([k,v],i)=>{const start=angle;angle+=sum?v/sum*100:0;return `${colors[i%colors.length]} ${start}% ${angle}%`});$('expenseDonut').style.background=slices.length?`conic-gradient(${slices.join(',')})`:'#ececf4';$('donutTotal').textContent=money(sum);$('categoryLegend').innerHTML=sorted.length?sorted.slice(0,5).map(([k,v],i)=>`<button type="button" class="cat-row" data-category="${esc(k)}" style="border:0;background:transparent;text-align:left;color:inherit;width:100%"><span class="cat-name"><i class="legend-dot" style="background:${colors[i%colors.length]}"></i>${esc(k)}</span><b>${money(v)}</b></button>`).join(''):'<span class="muted">अभी खर्च दर्ज नहीं है</span>';
+ document.querySelectorAll('[data-category]').forEach(el=>el.onclick=()=>{const k=el.dataset.category;showChartDetails(k+' का खर्च',month.filter(x=>x.type==='expense'&&(x.category||'अन्य')===k),`कुल खर्च ${money(cats[k]||0)} · इस महीने की सभी संबंधित एंट्री`)});
+ $('expenseDonut').onclick=()=>showChartDetails('सभी खर्च की कैटेगरी',month.filter(x=>x.type==='expense'),`कुल खर्च ${money(sum)} · सभी कैटेगरी की एंट्री`);$('expenseDonut').style.cursor='pointer';
+ const people=['मैं','बहन','साझा'],vals=people.map(person=>({person,value:month.filter(x=>x.type==='expense'&&x.person===person).reduce((a,x)=>a+Number(x.amount||0),0)})),mx=Math.max(1,...vals.map(x=>x.value));$('personAnalytics').innerHTML=vals.map(x=>`<div class="person-line" data-person="${esc(x.person)}" role="button" tabindex="0"><div class="row"><span>${x.person}</span><b>${money(x.value)}</b></div><div class="bar"><span style="width:${x.value/mx*100}%"></span></div></div>`).join('');
+ document.querySelectorAll('[data-person]').forEach(el=>{const open=()=>{const who=el.dataset.person;showChartDetails(who+' का खर्च',month.filter(x=>x.type==='expense'&&x.person===who),`कुल खर्च ${money(vals.find(v=>v.person===who)?.value||0)} · इस महीने की एंट्री`)};el.onclick=open;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}});
  const recent=[...usable].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);$('recentTransactions').innerHTML=recent.length?recent.map(x=>`<div class="recent-item"><div class="recent-icon">${x.type==='income'?'↙':'↗'}</div><div class="detail"><b>${esc(x.name)}</b><small>${esc(x.date||'')} · ${esc(x.person||'')} · ${esc(x.category||'')}</small></div><div class="recent-amount ${x.type==='income'?'green':'red'}">${x.type==='income'?'+':'−'}${money(x.amount)}</div></div>`).join(''):'<p class="muted">अभी कोई लेन-देन नहीं है।</p>';
 }
+
+$("closeDrilldown").onclick=()=> $("chartDrilldown").classList.add("hidden");
 
 function render(){
  const usable=entries.filter(x=>x.type==="income"||x.type==="expense"); const m=today().slice(0,7), month=usable.filter(x=>(x.date||"").startsWith(m)), inc=month.filter(x=>x.type==="income").reduce((a,x)=>a+Number(x.amount),0),exp=month.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount),0),allI=usable.filter(x=>x.type==="income").reduce((a,x)=>a+Number(x.amount),0),allE=usable.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount),0);
@@ -277,11 +251,9 @@ function render(){
  const chosenDate=$("filterDate").value||today(), fm=chosenDate.slice(0,7), fp=$("filterPerson").value, ft=$("filterType").value;
  const list=usable.filter(x=>(!fm||(x.date||"").startsWith(fm))&&(!fp||x.person===fp)&&(!ft||x.type===ft));
  $("historyList").innerHTML=list.length?list.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${esc(x.date)} · ${esc(x.person)} · ${esc(x.category||"")}</small></div><div style="text-align:right"><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</b><br><button class="smallbtn" onclick="deleteEntry('${x.id}')">हटाएँ</button></div></div>`).join(""):'<p class="muted">इस महीने कोई रिकॉर्ड नहीं है।</p>';
- // Show only the chosen date, not a long list of every day in the month.
+ // Date picker selection directly controls the day ledger; no extra "हिसाब देखें" card.
  selectedDay=chosenDate;
- const chosenLabel=new Date(chosenDate+"T00:00:00").toLocaleDateString("hi-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
- $("dailySummary").innerHTML=`<button class="day-row selected" id="showChosenDay" style="width:100%;text-align:left"><span><b>${chosenLabel}</b><small>इस तारीख का पूरा हिसाब देखने के लिए टैप करें</small></span><span class="day-net"><b>हिसाब देखें →</b></span></button>`;
- $("showChosenDay").onclick=()=>{selectedDay=chosenDate;render();};
+ $("dailySummary").innerHTML="";
  const monthDays=usable.filter(x=>(x.date||"")===chosenDate);
  const dayDetail=monthDays.filter(x=>x.date===selectedDay).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
  if(selectedDay){
@@ -289,14 +261,14 @@ function render(){
    const de=dayDetail.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount||0),0);
    const dt=new Date(selectedDay+"T00:00:00").toLocaleDateString("hi-IN",{day:"numeric",month:"long",year:"numeric",weekday:"long"});
    $("dailyDetail").classList.remove("hidden");
-   $("dailyDetail").innerHTML=`<div class="row"><h2 style="margin:0">${dt}</h2><span class="badge">दिन का हिसाब</span></div>
+   $("dailyDetail").innerHTML=`<div class="row"><h2 style="margin:0">${dt}</h2><span class="badge">पूरा दिन</span></div>
      <div class="day-metrics">
        <div class="day-metric"><small>कुल कमाई</small><b class="green">${money(di)}</b></div>
        <div class="day-metric"><small>कुल खर्च</small><b class="red">${money(de)}</b></div>
-       <div class="day-metric"><small>बचा हुआ</small><b class="${di-de>=0?"green":"red"}">${money(di-de)}</b></div>
+       <div class="day-metric"><small>दिन का अंतर</small><b class="${di-de>=0?"green":"red"}">${money(di-de)}</b></div>
      </div>
-     <h3 style="font-size:17px;margin:18px 0 10px">लेन-देन (${dayDetail.length})</h3>
-     <div class="day-ledger-list">${dayDetail.length?dayDetail.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${x.type==="income"?"कमाई":"खर्च"} · ${esc(x.person||"")} · ${esc(x.category||"")}<br>${esc(x.date||"")}${x.payment?" · "+esc(x.payment):""}${x.note?" · "+esc(x.note):""}</small></div><div style="text-align:right"><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</b><br><button class="smallbtn" onclick="deleteEntry('${x.id}')">हटाएँ</button></div></div>`).join(""):'<div class="day-empty">इस तारीख को कोई लेन-देन दर्ज नहीं है।</div>'}</div>`;
+     <h3 style="font-size:15px;margin:14px 0 8px">इस दिन के सभी लेन-देन (${dayDetail.length})</h3>
+     <div class="list">${dayDetail.length?dayDetail.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${x.type==="income"?"कमाई":"खर्च"} · ${esc(x.person||"")} · ${esc(x.category||"")}<br>${esc(x.payment||"")}${x.note?" · "+esc(x.note):""}</small></div><div style="text-align:right"><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</b><br><button class="smallbtn" onclick="deleteEntry('${x.id}')">हटाएँ</button></div></div>`).join(""):'<p class="muted">इस तारीख को कोई लेन-देन दर्ज नहीं है।</p>'}</div>`;
  }else{$("dailyDetail").classList.add("hidden");$("dailyDetail").innerHTML="";}
  const cats={};month.filter(x=>x.type==="expense").forEach(x=>cats[x.category||"अन्य"]=(cats[x.category||"अन्य"]||0)+Number(x.amount));$("reportRows").innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div><div class="row"><span>${esc(k)}</span><b>${money(v)}</b></div><div class="bar"><span style="width:${exp?Math.min(100,v/exp*100):0}%"></span></div></div>`).join("")||'<p class="muted">इस महीने खर्च दर्ज नहीं है।</p>';
  rentRender();
@@ -318,14 +290,35 @@ function setMode(m){
 }
 $("expenseMode").onclick=()=>setMode("expense");$("incomeMode").onclick=()=>setMode("income");
 function showItems(){
- let all=[...defaults,...customItems.map(x=>[x.name,x.category])];
- $("quickItems").innerHTML=all.map(([n,c])=>`<button class="item" data-name="${esc(n)}" data-cat="${esc(c)}">${esc(n)}</button>`).join("");
+ const visibleDefaults=defaults.filter(([n])=>!hiddenDefaultItems.includes(n));
+ const all=[...visibleDefaults,...customItems.map(x=>[x.name,x.category])];
+ $("quickItems").innerHTML="";
  $("itemOptions").innerHTML=all.map(([n])=>`<option value="${esc(n)}">`).join("");
- document.querySelectorAll(".item").forEach(b=>b.onclick=()=>{$("itemName").value=b.dataset.name;$("category").value=b.dataset.cat;});
- $("customManage").innerHTML=customItems.length?customItems.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${esc(x.category)}</small></div><button class="smallbtn" onclick="removeCustomItem('${x.id}')">हटाएँ</button></div>`).join(""):'<p class="muted">अभी कोई नया सामान नहीं है।</p>';
+ const current=$("itemName").value.trim().toLowerCase();
+ const match=all.find(([n])=>n.toLowerCase()===current);
+ if(match){$("category").value=match[1];}
+ $("customManage").innerHTML=all.length?all.map(([n,c])=>{
+   const custom=customItems.find(x=>x.name===n);
+   return `<div class="entry"><div><b>${esc(n)}</b><small>${esc(c)}</small></div><button class="smallbtn" onclick="${custom?`removeCustomItem('${custom.id}')`:`hideDefaultItem('${esc(n).replace(/'/g,"\\'")}')`}">हटाएँ</button></div>`;
+ }).join(""):'<p class="muted">कोई सामान सूची में नहीं है। नया सामान ऊपर जोड़ सकते हैं।</p>';
 }
 window.removeCustomItem=async id=>{const item=customItems.find(x=>x.id===id);if(!item)return;if(!confirm(`“${item.name}” को सामान की सूची से हटाएँ? पुराने खर्च सुरक्षित रहेंगे।`))return;try{await db.collection("users").doc(currentUser.uid).collection("entries").doc(id).delete();$("saveMsg").textContent="सामान सूची से हटा दिया गया ✓";}catch(e){alert("सामान नहीं हट सका: "+e.message)}};
+window.hideDefaultItem=async name=>{
+ if(!confirm(`“${name}” को सुझावों की सूची से हटाएँ? पुराने खर्च सुरक्षित रहेंगे।`))return;
+ try{await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"hiddenDefault",name,category:"",person:"साझा",date:today(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});}
+ catch(e){alert("सामान नहीं हट सका: "+e.message)}
+};
 showItems();
+$("itemName").addEventListener("change",()=>{
+ const n=$("itemName").value.trim().toLowerCase();
+ const found=[...defaults,...customItems.map(x=>[x.name,x.category])].find(([name])=>name.toLowerCase()===n);
+ if(found){$("category").value=found[1];$("quickItems").classList.add("hidden");}
+});
+$("itemName").addEventListener("input",()=>{
+ const n=$("itemName").value.trim().toLowerCase();
+ const found=[...defaults,...customItems.map(x=>[x.name,x.category])].find(([name])=>name.toLowerCase()===n);
+ if(found)$("category").value=found[1];
+});
 $("saveEntry").onclick=async()=>{
  const amount=Number($("amount").value),name=$("itemName").value.trim();
  if(!name||!amount||amount<=0){$("saveMsg").textContent="नाम और सही रकम भरें।";return}
@@ -334,7 +327,7 @@ $("saveEntry").onclick=async()=>{
 };
 $("addCustom").onclick=async()=>{let n=$("customName").value.trim(),c=$("customCategory").value;if(!n){$("saveMsg").textContent="पहले सामान का नाम लिखें।";return}if(customItems.some(x=>x.name.toLowerCase()===n.toLowerCase())){$("saveMsg").textContent="यह सामान पहले से सूची में है।";return}try{await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"customItem",name:n,category:c,person:"साझा",date:today(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});$("customName").value="";$("saveMsg").textContent="सामान सेव हो गया और दोनों फोन पर दिखेगा ✓";}catch(e){$("saveMsg").textContent="सामान सेव नहीं हुआ: "+e.message}};
 document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x===b));["add","history","rent","report"].forEach(t=>$("tab-"+t).classList.toggle("hidden",t!==b.dataset.tab));if(b.dataset.tab==="rent")rentRender()});
-$("filterDate").onchange=render;$("filterPerson").onchange=render;$("filterType").onchange=render;
+$("filterDate").value=today();selectedDay=today();$("filterDate").onchange=()=>{selectedDay=$("filterDate").value||today();render();};$("filterPerson").onchange=render;$("filterType").onchange=render;
 async function rentRender(){if(!currentUser)return;let m=today().slice(0,7),paid=entries.some(x=>x.type==="expense"&&x.category==="रेंट"&&x.date?.startsWith(m)&&x.name==="मकान किराया");$("rentStatus").innerHTML=paid?'<span class="badge">इस महीने Paid ✓</span>':'<span class="badge pending">इस महीने का ₹2,100 किराया Pending</span>'; $("rentPaid").disabled=paid;$("rentPaid").textContent=paid?"इस महीने का किराया दर्ज हो चुका है":"₹2,100 किराया Paid दर्ज करें";}
 $("rentPaid").onclick=async()=>{const m=today().slice(0,7);if(entries.some(x=>x.category==="रेंट"&&x.date?.startsWith(m)&&x.name==="मकान किराया"))return;try{await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"expense",name:"मकान किराया",amount:2100,date:today(),person:"साझा",category:"रेंट",payment:"UPI",note:"मासिक किराया",createdAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){alert("किराया सेव नहीं हुआ: "+e.message)}};
 function download(name,content,type){const a=document.createElement("a"),u=URL.createObjectURL(new Blob([content],{type}));a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
