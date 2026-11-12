@@ -31,6 +31,110 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
 .chart-card{padding:17px;margin:14px 0}.chart-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.chart-head h2{font-size:17px;margin:0}.chart-legend{display:flex;gap:12px;font-size:11px;color:var(--muted)}.legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}.month-chart{height:155px;display:flex;align-items:end;justify-content:space-around;gap:9px;padding:12px 3px 0;border-bottom:1px solid #edf0f5}.month-col{height:100%;flex:1;display:flex;align-items:end;justify-content:center;gap:4px}.month-col .barx{width:min(18px,38%);border-radius:7px 7px 2px 2px;min-height:2px}.barx.in{background:linear-gradient(180deg,#a16aff,#7138e8)}.barx.out{background:linear-gradient(180deg,#ff9a72,#ff7048)}.month-labels{display:flex;justify-content:space-around;color:#85899b;font-size:10px;padding-top:8px}.donut-wrap{display:flex;align-items:center;gap:16px}.donut{width:132px;height:132px;border-radius:50%;flex:none;position:relative;background:#eee}.donut:after{content:"";position:absolute;inset:29px;background:white;border-radius:50%}.donut-center{position:absolute;z-index:1;inset:0;display:grid;place-content:center;text-align:center;font-size:11px;color:var(--muted)}.donut-center b{font-size:16px;color:var(--ink)}.cat-legend{display:flex;flex-direction:column;gap:9px;min-width:0;flex:1}.cat-row{display:flex;justify-content:space-between;gap:7px;font-size:11px}.cat-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.recent-list,.person-bars{display:flex;flex-direction:column;gap:9px}.recent-item{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid #eff0f5;border-radius:15px}.recent-icon{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;font-size:16px;background:#f0eaff;color:#7138e8;flex:none}.recent-item .detail{min-width:0;flex:1}.recent-item .detail b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}.recent-item .detail small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.recent-amount{font-size:13px;font-weight:800;white-space:nowrap}.person-line .row{font-size:12px;margin-bottom:5px}.person-line .bar{height:10px;background:#f0eef7}.person-line .bar span{background:linear-gradient(90deg,#7138e8,#a66bff);border-radius:10px}
 @media(max-width:420px){.wrap{padding:11px}.dashboard-hero{padding:18px}.hero-balance{font-size:29px}.analytics-card{padding:13px}.analytics-card strong{font-size:21px}.donut-wrap{gap:12px}.donut{width:116px;height:116px}.donut:after{inset:25px}.chart-card{padding:14px}}
 
+
+/* Compact layout: avoid repeating the person chart and selected-date preview */
+.duplicate-person-summary{display:none!important}
+#dailySummary{display:none!important}
+
+/* Premium compact Records / day-ledger design */
+#tab-history>.card{
+  border:1px solid #e8e8f2;
+  border-radius:24px;
+  box-shadow:0 10px 28px rgba(38,29,73,.07);
+  padding:19px;
+  margin-bottom:16px;
+  background:linear-gradient(180deg,#fff 0%,#fcfbff 100%);
+}
+#tab-history>.card:first-child{
+  background:linear-gradient(145deg,#fff 0%,#f5f0ff 100%);
+  border-color:#e8defe;
+}
+#tab-history h2{font-size:20px;letter-spacing:-.35px}
+#tab-history #filterDate{
+  border:2px solid #ded2ff!important;
+  border-radius:16px!important;
+  background:#fff;
+  min-height:56px;
+  font-weight:700;
+  color:#29213f;
+  box-shadow:0 4px 12px rgba(113,56,232,.07);
+  accent-color:#7138e8;
+}
+#dailyDetail{
+  background:linear-gradient(145deg,#211d3b 0%,#352653 58%,#4b3473 100%)!important;
+  color:#fff;
+  border:0!important;
+  border-radius:25px!important;
+  box-shadow:0 12px 28px rgba(42,30,75,.18)!important;
+  padding:20px!important;
+  margin-bottom:16px;
+}
+#dailyDetail h2,#dailyDetail h3{color:#fff}
+#dailyDetail .badge{
+  background:#ffffff20!important;
+  color:#fff!important;
+  border:1px solid #ffffff30;
+}
+#dailyDetail .day-metrics{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin:16px 0;
+}
+#dailyDetail .day-metric{
+  border:1px solid #ffffff22;
+  border-radius:16px;
+  padding:12px 10px;
+  background:#ffffff12;
+  min-width:0;
+}
+#dailyDetail .day-metric small{color:#d5cde7;font-size:11px}
+#dailyDetail .day-metric b{display:block;font-size:clamp(15px,4vw,20px);margin-top:7px;overflow-wrap:anywhere}
+#dailyDetail .green{color:#6ee7bd!important}
+#dailyDetail .red{color:#ff9b87!important}
+#dailyDetail .day-ledger-list{display:flex;flex-direction:column;gap:10px}
+#dailyDetail .entry{
+  background:#fff;
+  color:#202b36;
+  border:1px solid #eeeaf7;
+  border-radius:17px;
+  padding:13px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+#dailyDetail .entry small{color:#777d8a}
+#dailyDetail .entry .smallbtn{
+  background:#f0eaff;
+  color:#6334c6;
+  border-radius:10px;
+}
+#dailyDetail .day-empty{
+  background:#ffffff14;
+  border:1px dashed #ffffff55;
+  border-radius:16px;
+  color:#e5def2;
+  padding:18px 14px;
+  text-align:center;
+}
+#tab-history .filters select{
+  border:1px solid #e3dcf2;
+  border-radius:13px;
+  background:#f8f6ff;
+  padding:11px;
+}
+#tab-history #historyList .entry{
+  border-radius:16px;
+  border:1px solid #eeeaf5;
+  margin-bottom:8px;
+  padding:13px;
+}
+@media(max-width:420px){
+  #tab-history>.card{padding:15px;border-radius:20px}
+  #dailyDetail{padding:16px!important}
+  #dailyDetail .day-metrics{gap:6px}
+  #dailyDetail .day-metric{padding:10px 7px}
+  #dailyDetail .day-metric small{font-size:10px}
+}
+
 </style>
 </head>
 <body>
@@ -64,7 +168,7 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
     <div class="card chart-card"><div class="chart-head"><h2>खर्च का विश्लेषण</h2><span class="muted">कैटेगरी के अनुसार</span></div><div class="donut-wrap"><div id="expenseDonut" class="donut"><div class="donut-center"><b id="donutTotal">₹0</b><span>कुल खर्च</span></div></div><div id="categoryLegend" class="cat-legend"></div></div></div>
     <div class="card chart-card"><div class="chart-head"><h2>किसने कितना खर्च किया?</h2><span class="badge">इस महीने</span></div><div class="person-bars" id="personAnalytics"></div></div>
     <div class="card chart-card"><div class="chart-head"><h2>हाल के लेन-देन</h2><span class="muted">नवीनतम 5</span></div><div id="recentTransactions" class="recent-list"></div></div>
-    <div class="card section">
+    <div class="card section duplicate-person-summary">
       <h2>इस महीने किसने कितना खर्च किया?</h2>
       <div class="splitgrid">
         <div class="stat"><small>मेरा खर्च</small><strong id="myExpense">₹0</strong></div>
@@ -99,9 +203,9 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
     <section id="tab-history" class="hidden">
       <div class="card section">
         <div class="row"><h2>तारीख के अनुसार पूरा हिसाब</h2></div>
-        <p class="muted">पहले साल, महीना और तारीख चुनें। फिर नीचे तारीख पर टैप करके उस दिन की पूरी कमाई और खर्च देखें।</p>
+        <p class="muted">तारीख चुनते ही उस दिन की पूरी कमाई, खर्च और सभी एंट्री नीचे दिखेंगी।</p>
         <div class="field"><label>तारीख चुनें (Date · Month · Year)</label><input id="filterDate" type="date" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:16px"></div>
-        <div id="dailySummary" class="list"></div>
+        <div id="dailySummary" class="list" hidden></div>
       </div>
       <div id="dailyDetail" class="card section hidden"></div>
       <div class="card section"><h2>सभी लेन-देन का रिकॉर्ड</h2>
@@ -185,14 +289,14 @@ function render(){
    const de=dayDetail.filter(x=>x.type==="expense").reduce((a,x)=>a+Number(x.amount||0),0);
    const dt=new Date(selectedDay+"T00:00:00").toLocaleDateString("hi-IN",{day:"numeric",month:"long",year:"numeric",weekday:"long"});
    $("dailyDetail").classList.remove("hidden");
-   $("dailyDetail").innerHTML=`<div class="row"><h2 style="margin:0">${dt}</h2><span class="badge">पूरा दिन</span></div>
+   $("dailyDetail").innerHTML=`<div class="row"><h2 style="margin:0">${dt}</h2><span class="badge">दिन का हिसाब</span></div>
      <div class="day-metrics">
        <div class="day-metric"><small>कुल कमाई</small><b class="green">${money(di)}</b></div>
        <div class="day-metric"><small>कुल खर्च</small><b class="red">${money(de)}</b></div>
-       <div class="day-metric"><small>दिन का अंतर</small><b class="${di-de>=0?"green":"red"}">${money(di-de)}</b></div>
+       <div class="day-metric"><small>बचा हुआ</small><b class="${di-de>=0?"green":"red"}">${money(di-de)}</b></div>
      </div>
-     <h3 style="font-size:15px;margin:14px 0 8px">इस दिन के सभी लेन-देन (${dayDetail.length})</h3>
-     <div class="list">${dayDetail.length?dayDetail.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${x.type==="income"?"कमाई":"खर्च"} · ${esc(x.person||"")} · ${esc(x.category||"")}<br>${esc(x.payment||"")}${x.note?" · "+esc(x.note):""}</small></div><div style="text-align:right"><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</b><br><button class="smallbtn" onclick="deleteEntry('${x.id}')">हटाएँ</button></div></div>`).join(""):'<p class="muted">इस तारीख को कोई लेन-देन दर्ज नहीं है।</p>'}</div>`;
+     <h3 style="font-size:17px;margin:18px 0 10px">लेन-देन (${dayDetail.length})</h3>
+     <div class="day-ledger-list">${dayDetail.length?dayDetail.map(x=>`<div class="entry"><div><b>${esc(x.name)}</b><small>${x.type==="income"?"कमाई":"खर्च"} · ${esc(x.person||"")} · ${esc(x.category||"")}<br>${esc(x.date||"")}${x.payment?" · "+esc(x.payment):""}${x.note?" · "+esc(x.note):""}</small></div><div style="text-align:right"><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"−"}${money(x.amount)}</b><br><button class="smallbtn" onclick="deleteEntry('${x.id}')">हटाएँ</button></div></div>`).join(""):'<div class="day-empty">इस तारीख को कोई लेन-देन दर्ज नहीं है।</div>'}</div>`;
  }else{$("dailyDetail").classList.add("hidden");$("dailyDetail").innerHTML="";}
  const cats={};month.filter(x=>x.type==="expense").forEach(x=>cats[x.category||"अन्य"]=(cats[x.category||"अन्य"]||0)+Number(x.amount));$("reportRows").innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div><div class="row"><span>${esc(k)}</span><b>${money(v)}</b></div><div class="bar"><span style="width:${exp?Math.min(100,v/exp*100):0}%"></span></div></div>`).join("")||'<p class="muted">इस महीने खर्च दर्ज नहीं है।</p>';
  rentRender();
