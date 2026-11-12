@@ -84,6 +84,29 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
  #dailyDetail .day-metrics small{font-size:10px}
 }
 
+
+/* Premium searchable item picker */
+.picker-wrap{position:relative}
+.picker-input-row{display:flex;align-items:center;gap:7px}
+.picker-input-row #itemName{flex:1;min-width:0}
+.picker-toggle{width:44px;height:46px;border:0;border-radius:14px;background:linear-gradient(135deg,#7138e8,#a66bff);color:#fff;font-size:23px;font-weight:800;box-shadow:0 5px 14px #7138e833}
+.item-picker{position:absolute;z-index:50;top:calc(100% + 8px);left:0;right:0;padding:11px;border:1px solid #e5dcfb;border-radius:20px;background:#fff;box-shadow:0 18px 40px rgba(35,23,66,.18)}
+.item-picker.hidden{display:none}
+.picker-search{display:flex;align-items:center;gap:8px;padding:0 11px;border:1px solid #e6def8;border-radius:13px;background:#f8f5ff}
+.picker-search span{font-size:22px;color:#7138e8}
+.picker-search input{border:0!important;background:transparent!important;box-shadow:none!important;padding:12px 2px!important;min-width:0}
+.item-suggestions{max-height:245px;overflow:auto;display:flex;flex-direction:column;gap:5px;margin-top:9px}
+.item-suggestion{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 12px;border:0;border-radius:12px;background:#f8f7fc;color:#28233a;text-align:left;font-weight:650}
+.item-suggestion:active{background:#eee6ff}
+.item-suggestion small{display:block;color:#858092;font-weight:500;font-size:10px}
+.item-suggestion .choose-mark{color:#7138e8;font-size:18px}
+.item-suggestion .remove-suggestion{border:0;border-radius:8px;background:#fff0f0;color:#d44b4b;padding:5px 8px}
+.add-new-row{margin-top:9px;padding-top:9px;border-top:1px solid #eee9f7}
+.add-new-button{width:100%;padding:12px;border:0;border-radius:13px;background:linear-gradient(100deg,#7138e8,#a66bff);color:white;font-weight:750}
+.picker-empty{padding:14px;text-align:center;color:#8a8498;font-size:12px}
+#customCard,#quickItems{display:none!important}
+@media(max-width:420px){.item-picker{padding:9px}.item-suggestions{max-height:220px}}
+
 </style>
 </head>
 <body>
@@ -135,7 +158,17 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
         <div class="tabs"><button class="active" id="expenseMode">खर्च दर्ज करें</button><button id="incomeMode">पैसे मिले</button></div>
         <div class="section">
           <div class="field"><label id="personLabel">किसका खर्च है?</label><select id="person"><option>मैं</option><option>बहन</option><option>साझा</option></select></div>
-          <div class="field section"><label id="itemLabel">सामान / खर्च का नाम</label><input id="itemName" list="itemOptions" autocomplete="off" placeholder="सामान खोजें या नाम लिखें…"><datalist id="itemOptions"></datalist></div>
+          <div class="field section"><label id="itemLabel">सामान / खर्च का नाम</label><div class="picker-wrap">
+            <div class="picker-input-row">
+              <input id="itemName" autocomplete="off" placeholder="सामान चुनें या नया नाम लिखें…" aria-haspopup="listbox" aria-expanded="false">
+              <button type="button" id="openItemPicker" class="picker-toggle" aria-label="सामान की सूची खोलें">⌄</button>
+            </div>
+            <div id="itemPicker" class="item-picker hidden">
+              <div class="picker-search"><span>⌕</span><input id="itemSearch" autocomplete="off" placeholder="सामान खोजें…"></div>
+              <div id="itemSuggestions" class="item-suggestions" role="listbox"></div>
+              <div id="addNewItemRow" class="add-new-row hidden"></div>
+            </div>
+          </div></div>
           <div class="items hidden" id="quickItems"></div>
           <div class="formgrid section">
             <div class="field"><label>रकम (₹)</label><input id="amount" type="number" min="1" step="0.01" placeholder="0"></div>
@@ -148,7 +181,6 @@ body{background:#f4f5fb}.top .logo{background:linear-gradient(135deg,#7b42ef,#a6
           <p id="saveMsg" class="muted"></p>
         </div>
       </div>
-      <div class="card section" id="customCard"><div class="row"><h2>अपना सामान जोड़ें</h2><span class="badge">Custom</span></div><div class="formgrid"><div class="field"><label>नए सामान का नाम</label><input id="customName" placeholder="जैसे बाल्टी"></div><div class="field"><label>कैटेगरी</label><select id="customCategory"></select></div></div><button id="addCustom" class="btn secondary" style="margin-top:10px">+ सामान लिस्ट में जोड़ें</button><div class="section"><h3 style="font-size:15px;margin:14px 0 8px">मेरे जोड़े हुए सामान</h3><div id="customManage" class="list"><p class="muted">अभी कोई नया सामान नहीं है।</p></div><p class="muted">हटाने से केवल सामान की सूची से हटेगा; पुराने खर्च सुरक्षित रहेंगे।</p></div></div>
     </section>
     <section id="tab-history" class="hidden">
       <div class="card section">
@@ -283,49 +315,99 @@ function setMode(m){
  $("itemLabel").textContent=m==="income"?"पैसे कहाँ से मिले?":"सामान / खर्च का नाम";
  $("itemName").placeholder=m==="income"?"जैसे वेतन, पापा से मिले पैसे, रिफंड":"जैसे दूध, तेल, SSC फॉर्म";
  $("categoryLabel").textContent=m==="income"?"आमदनी की कैटेगरी":"खर्च की कैटेगरी";
- $("quickItems").classList.toggle("hidden",m==="income");$("customCard").classList.toggle("hidden",m==="income");
+ $("quickItems").classList.add("hidden");closeItemPicker();$("itemPicker").classList.toggle("hidden",m==="income");$("openItemPicker").disabled=m==="income";
  fillCategories(m==="income"?incomeCategories:expenseCategories,"category");
- if(m==="income")$("itemOptions").innerHTML=incomeSources.map(x=>`<option value="${esc(x)}">`).join("");
- else showItems();
+ if(m==="income"){closeItemPicker();$("itemName").placeholder="जैसे वेतन, पापा से मिले पैसे, रिफंड";}
+ else { $("itemName").placeholder="सामान चुनें या नया नाम लिखें…"; showItems();}
 }
 $("expenseMode").onclick=()=>setMode("expense");$("incomeMode").onclick=()=>setMode("income");
-function showItems(){
- const visibleDefaults=defaults.filter(([n])=>!hiddenDefaultItems.includes(n));
- const all=[...visibleDefaults,...customItems.map(x=>[x.name,x.category])];
- $("quickItems").innerHTML="";
- $("itemOptions").innerHTML=all.map(([n])=>`<option value="${esc(n)}">`).join("");
- const current=$("itemName").value.trim().toLowerCase();
- const match=all.find(([n])=>n.toLowerCase()===current);
- if(match){$("category").value=match[1];}
- $("customManage").innerHTML=all.length?all.map(([n,c])=>{
-   const custom=customItems.find(x=>x.name===n);
-   return `<div class="entry"><div><b>${esc(n)}</b><small>${esc(c)}</small></div><button class="smallbtn" onclick="${custom?`removeCustomItem('${custom.id}')`:`hideDefaultItem('${esc(n).replace(/'/g,"\\'")}')`}">हटाएँ</button></div>`;
- }).join(""):'<p class="muted">कोई सामान सूची में नहीं है। नया सामान ऊपर जोड़ सकते हैं।</p>';
+
+function allPickerItems(){
+ const visibleDefaults=defaults.filter(([name])=>!hiddenDefaultItems.includes(name));
+ return [...visibleDefaults.map(([name,category])=>({name,category,kind:"default"})),
+   ...customItems.map(x=>({name:x.name,category:x.category||"अन्य",kind:"custom",id:x.id}))];
 }
-window.removeCustomItem=async id=>{const item=customItems.find(x=>x.id===id);if(!item)return;if(!confirm(`“${item.name}” को सामान की सूची से हटाएँ? पुराने खर्च सुरक्षित रहेंगे।`))return;try{await db.collection("users").doc(currentUser.uid).collection("entries").doc(id).delete();$("saveMsg").textContent="सामान सूची से हटा दिया गया ✓";}catch(e){alert("सामान नहीं हट सका: "+e.message)}};
-window.hideDefaultItem=async name=>{
- if(!confirm(`“${name}” को सुझावों की सूची से हटाएँ? पुराने खर्च सुरक्षित रहेंगे।`))return;
- try{await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"hiddenDefault",name,category:"",person:"साझा",date:today(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});}
+function closeItemPicker(){
+ $("itemPicker").classList.add("hidden");
+ $("itemName").setAttribute("aria-expanded","false");
+}
+function chooseItem(name,category){
+ $("itemName").value=name;
+ if(category)$("category").value=category;
+ closeItemPicker();
+ $("itemName").focus();
+}
+function renderItemPicker(query=""){
+ const q=query.trim().toLocaleLowerCase("hi-IN");
+ const items=allPickerItems().filter(x=>x.name.toLocaleLowerCase("hi-IN").includes(q));
+ $("itemSuggestions").innerHTML=items.length?items.map(x=>`
+  <div class="item-suggestion">
+   <button type="button" class="suggestion-pick" data-pick="${esc(x.name)}" data-cat="${esc(x.category)}" style="flex:1;text-align:left;border:0;background:transparent;color:inherit;font-weight:650">
+    ${esc(x.name)}<small>${esc(x.category)}</small>
+   </button>
+   ${x.kind==="custom"?`<button type="button" class="remove-suggestion" data-remove="${esc(x.id)}" aria-label="हटाएँ">×</button>`:""}
+  </div>`).join(""):'<div class="picker-empty">कोई सामान नहीं मिला। नीचे नया सामान जोड़ सकते हैं।</div>';
+ $("itemSuggestions").querySelectorAll("[data-pick]").forEach(btn=>btn.onclick=()=>chooseItem(btn.dataset.pick,btn.dataset.cat));
+ $("itemSuggestions").querySelectorAll("[data-remove]").forEach(btn=>btn.onclick=()=>removeCustomItem(btn.dataset.remove));
+ const exact=allPickerItems().some(x=>x.name.toLocaleLowerCase("hi-IN")===q);
+ $("addNewItemRow").classList.toggle("hidden",!q||exact);
+ $("addNewItemRow").innerHTML=q&&!exact?`<button type="button" class="add-new-button" id="addTypedItem">＋ “${esc(query.trim())}” नया सामान जोड़ें</button>`:"";
+ const addBtn=$("addTypedItem");
+ if(addBtn)addBtn.onclick=()=>addCustomFromPicker(query.trim());
+}
+function showItems(){
+ $("itemOptions")?.replaceChildren();
+ renderItemPicker($("itemSearch").value||"");
+}
+async function addCustomFromPicker(name){
+ const n=name.trim();
+ if(!n)return;
+ const existing=allPickerItems().find(x=>x.name.toLocaleLowerCase("hi-IN")===n.toLocaleLowerCase("hi-IN"));
+ if(existing){chooseItem(existing.name,existing.category);return;}
+ const c=$("category").value||"अन्य";
+ try{
+  const ref=await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"customItem",name:n,category:c,person:"साझा",date:today(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  chooseItem(n,c);
+  $("saveMsg").textContent="नया सामान सूची में जुड़ गया ✓";
+ }catch(e){$("saveMsg").textContent="सामान नहीं जुड़ सका: "+e.message;}
+}
+window.removeCustomItem=async id=>{
+ const item=customItems.find(x=>x.id===id);if(!item)return;
+ if(!confirm(`“${item.name}” को सुझावों से हटाएँ? पुराने खर्च सुरक्षित रहेंगे।`))return;
+ try{await db.collection("users").doc(currentUser.uid).collection("entries").doc(id).delete();renderItemPicker($("itemSearch").value||"");}
  catch(e){alert("सामान नहीं हट सका: "+e.message)}
 };
-showItems();
-$("itemName").addEventListener("change",()=>{
- const n=$("itemName").value.trim().toLowerCase();
- const found=[...defaults,...customItems.map(x=>[x.name,x.category])].find(([name])=>name.toLowerCase()===n);
- if(found){$("category").value=found[1];$("quickItems").classList.add("hidden");}
+$("openItemPicker").onclick=()=>{
+ const opening=$("itemPicker").classList.contains("hidden");
+ if(opening){$("itemPicker").classList.remove("hidden");$("itemName").setAttribute("aria-expanded","true");$("itemSearch").value=$("itemName").value||"";renderItemPicker($("itemSearch").value);$("itemSearch").focus();}
+ else closeItemPicker();
+};
+$("itemName").addEventListener("focus",()=>{
+ $("itemPicker").classList.remove("hidden");$("itemName").setAttribute("aria-expanded","true");
+ $("itemSearch").value=$("itemName").value||"";renderItemPicker($("itemSearch").value);
 });
 $("itemName").addEventListener("input",()=>{
- const n=$("itemName").value.trim().toLowerCase();
- const found=[...defaults,...customItems.map(x=>[x.name,x.category])].find(([name])=>name.toLowerCase()===n);
- if(found)$("category").value=found[1];
+ $("itemPicker").classList.remove("hidden");$("itemName").setAttribute("aria-expanded","true");
+ $("itemSearch").value=$("itemName").value;renderItemPicker($("itemSearch").value);
+ const found=allPickerItems().find(x=>x.name.toLocaleLowerCase("hi-IN")===$("itemName").value.trim().toLocaleLowerCase("hi-IN"));
+ if(found)$("category").value=found.category;
 });
+$("itemSearch").addEventListener("input",()=>renderItemPicker($("itemSearch").value));
+$("itemName").addEventListener("change",()=>{
+ const found=allPickerItems().find(x=>x.name.toLocaleLowerCase("hi-IN")===$("itemName").value.trim().toLocaleLowerCase("hi-IN"));
+ if(found){$("category").value=found.category;closeItemPicker();}
+});
+document.addEventListener("click",e=>{
+ if(!$("itemPicker").contains(e.target)&&!$("itemName").contains(e.target)&&!$("openItemPicker").contains(e.target))closeItemPicker();
+});
+showItems();
 $("saveEntry").onclick=async()=>{
  const amount=Number($("amount").value),name=$("itemName").value.trim();
  if(!name||!amount||amount<=0){$("saveMsg").textContent="नाम और सही रकम भरें।";return}
  const data={type:mode,name,amount,date:$("date").value||today(),person:$("person").value,category:$("category").value,payment:$("payment").value,note:$("note").value.trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()};
- try{await db.collection("users").doc(currentUser.uid).collection("entries").add(data);$("amount").value="";$("itemName").value="";$("note").value="";$("saveMsg").textContent="सेव हो गया ✓";}catch(e){$("saveMsg").textContent="सेव नहीं हुआ: "+e.message}
+ try{await db.collection("users").doc(currentUser.uid).collection("entries").add(data);$("amount").value="";$("itemName").value="";$("itemSearch").value="";$("note").value="";closeItemPicker();$("saveMsg").textContent="सेव हो गया ✓";}catch(e){$("saveMsg").textContent="सेव नहीं हुआ: "+e.message}
 };
-$("addCustom").onclick=async()=>{let n=$("customName").value.trim(),c=$("customCategory").value;if(!n){$("saveMsg").textContent="पहले सामान का नाम लिखें।";return}if(customItems.some(x=>x.name.toLowerCase()===n.toLowerCase())){$("saveMsg").textContent="यह सामान पहले से सूची में है।";return}try{await db.collection("users").doc(currentUser.uid).collection("entries").add({type:"customItem",name:n,category:c,person:"साझा",date:today(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});$("customName").value="";$("saveMsg").textContent="सामान सेव हो गया और दोनों फोन पर दिखेगा ✓";}catch(e){$("saveMsg").textContent="सामान सेव नहीं हुआ: "+e.message}};
+
 document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x===b));["add","history","rent","report"].forEach(t=>$("tab-"+t).classList.toggle("hidden",t!==b.dataset.tab));if(b.dataset.tab==="rent")rentRender()});
 $("filterDate").value=today();selectedDay=today();$("filterDate").onchange=()=>{selectedDay=$("filterDate").value||today();render();};$("filterPerson").onchange=render;$("filterType").onchange=render;
 async function rentRender(){if(!currentUser)return;let m=today().slice(0,7),paid=entries.some(x=>x.type==="expense"&&x.category==="रेंट"&&x.date?.startsWith(m)&&x.name==="मकान किराया");$("rentStatus").innerHTML=paid?'<span class="badge">इस महीने Paid ✓</span>':'<span class="badge pending">इस महीने का ₹2,100 किराया Pending</span>'; $("rentPaid").disabled=paid;$("rentPaid").textContent=paid?"इस महीने का किराया दर्ज हो चुका है":"₹2,100 किराया Paid दर्ज करें";}
